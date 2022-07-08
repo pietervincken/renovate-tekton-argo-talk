@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- .yml
+- resources/render/config-logging.yml
+- resources/render/config.yml
+- resources/render/tekton-config-defaults.yml
+- resources/render/tekton-config-observability.yml
+- resources/render/tekton-config-read-role.yml
+- resources/render/tekton-config-read-rolebinding.yml
+- resources/render/tekton-operator-info.yml
+- resources/render/tekton-operator-webhook-certs.yml
+- resources/render/tekton-operator-webhook.yml
+- resources/render/tekton-operator.yml
+- resources/render/tektonchains.operator.tekton.dev.yml
+- resources/render/tektonconfigs.operator.tekton.dev.yml
+- resources/render/tektondashboards.operator.tekton.dev.yml
+- resources/render/tektonhubs.operator.tekton.dev.yml
+- resources/render/tektoninstallersets.operator.tekton.dev.yml
+- resources/render/tektonpipelines.operator.tekton.dev.yml
+- resources/render/tektonresults.operator.tekton.dev.yml
+- resources/render/tektontriggers.operator.tekton.dev.yml

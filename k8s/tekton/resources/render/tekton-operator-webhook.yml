@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    operator.tekton.dev/release: v0.60.0
+    version: v0.60.0
+  name: tekton-operator-webhook
+  namespace: tekton-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tekton-operator-webhook
+  template:
+    metadata:
+      labels:
+        app: tekton-operator
+        name: tekton-operator-webhook
+    spec:
+      containers:
+        - env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: config-logging
+            - name: WEBHOOK_SERVICE_NAME
+              value: tekton-operator-webhook
+            - name: WEBHOOK_SECRET_NAME
+              value: tekton-operator-webhook-certs
+            - name: METRICS_DOMAIN
+              value: tekton.dev/operator
+          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.60.0@sha256:aa13f702ea1b0fa8bf6ccd7c2b99eeebe15f8df26ad2b80ea2f24a9f5b35b211
+          name: tekton-operator-webhook
+          ports:
+            - containerPort: 8443
+              name: https-webhook
+      serviceAccountName: tekton-operator
