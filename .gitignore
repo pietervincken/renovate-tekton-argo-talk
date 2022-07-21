@@ -32,3 +32,4 @@ override.tf.json
 # example: *tfplan*
 
 .env
+terraform/output.json

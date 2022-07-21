@@ -80,7 +80,29 @@ data "azuread_domains" "aad_domains" {
 
 }
 
-resource "azurerm_role_assignment" "aks" {
+## Id is needed for scope of role assignment.
+data "azurerm_resource_group" "k8s_node_rg" {
+  name = azurerm_kubernetes_cluster.cluster.node_resource_group
+}
+
+# Needed for aad-pod-identity
+# Contributor role on VMSS
+resource "azurerm_role_assignment" "aad_pod_identity_VMC" {
+  scope                = data.azurerm_resource_group.k8s_node_rg.id
+  role_definition_name = "Virtual Machine Contributor"
+  principal_id         = azurerm_kubernetes_cluster.cluster.kubelet_identity[0].object_id
+}
+
+# Needed for aad-pod-identity
+# Managed Identity Operator role on resource group holding the actual identities
+resource "azurerm_role_assignment" "aad_pod_identity_MIO" {
+  scope                = azurerm_resource_group.rg.id
+  role_definition_name = "Managed Identity Operator"
+  principal_id         = azurerm_kubernetes_cluster.cluster.kubelet_identity[0].object_id
+}
+
+# Demo users access (local.email)
+resource "azurerm_role_assignment" "admin_access" {
   scope                = azurerm_kubernetes_cluster.cluster.id
   role_definition_name = "Azure Kubernetes Service Cluster Admin Role"
   principal_id         = data.azuread_user.user.object_id
@@ -94,7 +116,8 @@ resource "azurerm_key_vault" "keyvault" {
   location            = azurerm_resource_group.rg.location
 }
 
-resource "azurerm_key_vault_access_policy" "myaccess" {
+# Access for demo user to keyvault
+resource "azurerm_key_vault_access_policy" "admin_access" {
   key_vault_id = azurerm_key_vault.keyvault.id
   tenant_id    = azurerm_key_vault.keyvault.tenant_id
   object_id    = data.azuread_user.user.object_id

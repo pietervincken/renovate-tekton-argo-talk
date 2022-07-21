@@ -1,17 +1,27 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - resources/ns.yaml
-  - resources/render/clusterexternalsecrets.external-secrets.io.yml
-  - resources/render/clustersecretstores.external-secrets.io.yml
-  - resources/render/external-secrets-cert-controller.yml
-  - resources/render/external-secrets-controller.yml
-  - resources/render/external-secrets-edit.yml
-  - resources/render/external-secrets-leaderelection.yml
-  - resources/render/external-secrets-view.yml
-  - resources/render/external-secrets-webhook.yml
-  - resources/render/external-secrets.yml
-  - resources/render/externalsecret-validate.yml
-  - resources/render/externalsecrets.external-secrets.io.yml
-  - resources/render/secretstore-validate.yml
-  - resources/render/secretstores.external-secrets.io.yml
+- resources/ns.yaml
+- resources/render/clusterexternalsecrets.external-secrets.io-CustomResourceDefinition.yml
+- resources/render/clustersecretstores.external-secrets.io-CustomResourceDefinition.yml
+- resources/render/external-secrets-Deployment.yml
+- resources/render/external-secrets-ServiceAccount.yml
+- resources/render/external-secrets-cert-controller-ClusterRole.yml
+- resources/render/external-secrets-cert-controller-ClusterRoleBinding.yml
+- resources/render/external-secrets-cert-controller-Deployment.yml
+- resources/render/external-secrets-cert-controller-ServiceAccount.yml
+- resources/render/external-secrets-controller-ClusterRole.yml
+- resources/render/external-secrets-controller-ClusterRoleBinding.yml
+- resources/render/external-secrets-edit-ClusterRole.yml
+- resources/render/external-secrets-leaderelection-Role.yml
+- resources/render/external-secrets-leaderelection-RoleBinding.yml
+- resources/render/external-secrets-view-ClusterRole.yml
+- resources/render/external-secrets-webhook-Deployment.yml
+- resources/render/external-secrets-webhook-Secret.yml
+- resources/render/external-secrets-webhook-Service.yml
+- resources/render/external-secrets-webhook-ServiceAccount.yml
+- resources/render/externalsecret-validate-ValidatingWebhookConfiguration.yml
+- resources/render/externalsecrets.external-secrets.io-CustomResourceDefinition.yml
+- resources/render/secretstore-validate-ValidatingWebhookConfiguration.yml
+- resources/render/secretstores.external-secrets.io-CustomResourceDefinition.yml
+- resources/secretstore.yaml
