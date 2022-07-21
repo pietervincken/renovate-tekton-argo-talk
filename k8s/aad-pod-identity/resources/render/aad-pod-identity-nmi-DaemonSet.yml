@@ -1,0 +1,96 @@
+---
+# Source: aad-pod-identity/templates/nmi-daemonset.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: aad-pod-identity-nmi
+  namespace: aad-pod-identity
+  labels:
+    app.kubernetes.io/name: aad-pod-identity
+    app.kubernetes.io/instance: aad-pod-identity
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: aad-pod-identity-4.1.11
+    app.kubernetes.io/component: nmi
+    tier: node
+  annotations:
+    description: Deploy components for aad-pod-identity
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: aad-pod-identity
+      app.kubernetes.io/instance: aad-pod-identity
+      app.kubernetes.io/component: nmi
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: aad-pod-identity
+        app.kubernetes.io/instance: aad-pod-identity
+        app.kubernetes.io/managed-by: Helm
+        helm.sh/chart: aad-pod-identity-4.1.11
+        app.kubernetes.io/component: nmi
+        tier: node
+    spec:
+      serviceAccountName: aad-pod-identity-nmi
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      volumes:
+        - hostPath:
+            path: /run/xtables.lock
+            type: FileOrCreate
+          name: iptableslock
+        - name: kubelet-config
+          hostPath:
+            path: /etc/default/kubelet
+            type: FileOrCreate
+      containers:
+        - name: nmi
+          image: "mcr.microsoft.com/oss/azure/aad-pod-identity/nmi:v1.8.10"
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--node=$(NODE_NAME)"
+            - --http-probe-port=8085
+            - --enableScaleFeatures=true
+            - --metadata-header-required=true
+            - --operation-mode=standard
+            - --kubelet-config=/etc/default/kubelet
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: FORCENAMESPACED
+              value: "true"
+          securityContext:
+            runAsUser: 0
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - DAC_READ_SEARCH
+                - NET_ADMIN
+                - NET_RAW
+          volumeMounts:
+            - mountPath: /run/xtables.lock
+              name: iptableslock
+            - name: kubelet-config
+              mountPath: /etc/default/kubelet
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8085
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+      nodeSelector:
+        kubernetes.io/os: linux

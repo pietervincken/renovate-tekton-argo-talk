@@ -1,0 +1,20 @@
+---
+# Source: aad-pod-identity/templates/mic-clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: aad-pod-identity-mic
+  labels:
+    app.kubernetes.io/name: aad-pod-identity
+    app.kubernetes.io/instance: aad-pod-identity
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: aad-pod-identity-4.1.11
+    app.kubernetes.io/component: mic
+subjects:
+  - kind: ServiceAccount
+    name: aad-pod-identity-mic
+    namespace: aad-pod-identity
+roleRef:
+  kind: ClusterRole
+  name: aad-pod-identity-mic
+  apiGroup: rbac.authorization.k8s.io
