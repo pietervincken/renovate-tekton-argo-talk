@@ -23,5 +23,5 @@ kubectl apply -k k8s/external-secrets-operator
 # kubectl apply -k k8s/tekton
 
 kubectl apply -k k8s/external-dns # first attempt will fail due to missing crds
-
 kubectl apply -k k8s/external-dns
+
