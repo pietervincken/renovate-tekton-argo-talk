@@ -1,0 +1,18 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: github-pr-binding
+spec:
+  params:
+    # - name: gitrevision
+    #   value: $(body.head_commit.id)
+    - name: gitrevision
+      value: $(extensions.sanitized_gitref)
+    # - name: gitrepositoryurl
+    #   value: $(body.repository.clone_url)
+    - name: gitrepositoryurl
+      value: $(body.repository.ssh_url)
+    - name: gitrepositoryname
+      value: $(body.repository.name)
+    - name: gitpushuseremail
+      value: $(body.head_commit.author.email)

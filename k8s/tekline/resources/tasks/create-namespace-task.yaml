@@ -1,0 +1,103 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: create-namespace
+spec:
+  params:
+    - name: TEKLINE_IMAGE
+      default: docker.io/joyrex2001/tekline:latest
+    - name: git-repository-name
+    - name: git-revision
+
+  results:
+    - name: namespace
+
+  steps:
+    - name: create-namespace
+      image: "$(params.TEKLINE_IMAGE)"
+      script: |
+        #!/bin/bash
+        set -euxo pipefail
+
+        function get_namespace() {
+            local reponame=$1
+            local revision=$2
+
+            namespace=$(echo ${reponame}-${revision} | sed 's/[^A-Za-z0-9\-]//g' | tr '[:upper:]' '[:lower:]')
+            namespace=${namespace::63}
+
+            # namespaces must end with an alphanumeric character.
+            allowed_last_character=[A-Za-z0-9]
+            i=-1;
+            while [[ ! ${namespace: ${i}} =~ $allowed_last_character ]]
+            do
+                namespace=${namespace::${#namespace}${i}}
+                i=$(expr ${i} - 1)
+            done
+
+            echo $namespace
+        }
+
+        repo=$(params.git-repository-name)
+        revision=$(params.git-revision)
+        namespace=$(echo "tekline-"$repo"-"$revision | sed s'/[^A-Za-z0-9\-]//' | tr '[:upper:]' '[:lower:]')
+        namespace=${namespace::63}
+
+        # namespaces must end with an alphanumeric character.
+        allowed_last_character=[A-Za-z0-9]
+        i=-1;
+        while [[ ! ${namespace: ${i}} =~ $allowed_last_character ]]
+        do
+            namespace=${namespace::${#namespace}${i}}
+            i=$(expr ${i} - 1)
+        done
+
+        kubectl get namespace ${namespace} || kubectl create namespace ${namespace}
+        kubectl get sa tekline -n ${namespace} || kubectl create sa -n ${namespace} tekline
+
+        kubectl get rolebinding -n ${namespace} tekline-edit || \
+          kubectl create rolebinding tekline-edit         \
+                    --clusterrole=edit                    \
+                    --serviceaccount=${namespace}:tekline \
+                    --namespace=${namespace}
+
+        for secret in $(kubectl get secret -o name -n tekline -l tekline.joyrex2001.com/sync-to-delegate=true)
+        do {
+            copy=$(kubectl get ${secret} -n tekline -o json | jq --raw-output '{
+                apiVersion: .apiVersion, 
+                kind: .kind, 
+                metadata: { 
+                    name: .metadata.name, 
+                    annotations: .metadata.annotations | with_entries(select(.key|test("^tekton")))
+                },
+                type: .type, 
+                data: .data 
+            }')
+            echo $copy | kubectl apply -f - -n ${namespace}
+        } done
+
+        ## we'll store our temporary files here
+        sa=/tmp/sa-$$.json
+        secrets=/tmp/secrets-$$.json
+        newsa=/tmp/secret-$$.json
+
+        ## get service account, and remove all secrets except the token
+        kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '{
+            apiVersion: .apiVersion, 
+            kind: .kind, 
+            metadata: .metadata, 
+            secrets: .secrets[] | select(.name|test("^tekline"))
+        }' > ${sa}
+
+        ## create a json with an array called secrets for all secrets that are
+        ## copied over to the namespace, to be added to the service account
+        kubectl get secret -n tekline -l tekline.joyrex2001.com/sync-to-delegate=true -o json | jq --raw-output '{
+            secrets: [ .items | { name: .[].metadata.name } ]
+        }' > ${secrets}
+
+        ## merge the two json files, combining the arrays of secrets
+        jq -s '.[].secrets = ([.[].secrets]|flatten) | .[0]' ${sa} ${secrets} > ${newsa}
+        kubectl apply -f ${newsa}
+
+
+        echo ${namespace} | tee $(results.namespace.path)

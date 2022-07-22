@@ -32,3 +32,4 @@ export ARM_TENANT_ID="" # add your tenant id here. Required for setting up right
 - Configure Renovate
 - Configure ArgoCD
 - Configure Tekton
+- Create Github secret in TF

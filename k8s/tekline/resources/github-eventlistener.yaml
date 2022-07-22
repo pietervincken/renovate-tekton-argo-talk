@@ -1,0 +1,46 @@
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: github-listener
+spec:
+  triggers:
+    - name: github-listener
+      interceptors:
+        - ref:
+            name: "cel"
+          params:
+            - name: "secretRef"
+              value:
+                secretName: es-github-trigger-secret
+                secretKey: secretToken
+            - name: "eventTypes"
+              value: ["push"]
+            - name: "overlays"
+              value:
+                - key: sanitized_gitref
+                  expression: "body.ref.split('/')[2]"
+        # - name: "only when PRs are opened"
+        #   ref:
+        #     name: "cel"
+        #   params:
+        #     - name: "filter"
+        #       value: "body.action in ['opened', 'synchronize', 'reopened']"
+      bindings:
+        - ref: github-pr-binding
+      template:
+        ref: github-template
+  resources:
+    kubernetesResource:
+      spec:
+        template:
+          spec:
+            serviceAccountName: tekton-triggers-github-sa
+            containers:
+              - resources:
+                  requests:
+                    memory: "64Mi"
+                    cpu: "250m"
+                  limits:
+                    memory: "128Mi"
+                    cpu: "500m"

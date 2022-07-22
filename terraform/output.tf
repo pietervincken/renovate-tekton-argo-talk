@@ -17,3 +17,7 @@ output "external_dns_resource_id" {
 output "domain" {
   value = azurerm_dns_zone.domain.name
 }
+
+output "keyvault" {
+  value = azurerm_key_vault.keyvault.name
+}
