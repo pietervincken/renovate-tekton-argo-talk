@@ -3,15 +3,14 @@ kind: Ingress
 metadata:
   name: github-eventlistener
   annotations:
-    # traefik.ingress.kubernetes.io/router.middlewares: traefik-stripprefix@kubernetescrd
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
     - hosts:
-        - renovate-talk.pietervincken.com
+        - tekline.renovate-talk.pietervincken.com
       secretName: tls
   rules:
-    - host: renovate-talk.pietervincken.com
+    - host: tekline.renovate-talk.pietervincken.com
       http:
         paths:
           - path: /tekline
