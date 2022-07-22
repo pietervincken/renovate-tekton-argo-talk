@@ -44,15 +44,16 @@ kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded external-secrets-operator"
 
+argoCDVersion=$(get_latest_release "argoproj/argo-cd")
 cd k8s/argocd
 rm -rf resources/render/
 mkdir -p resources/render
 kubectl create ns argocd -o yaml --dry-run=client > resources/render/ns.yaml
-curl -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -s https://raw.githubusercontent.com/argoproj/argo-cd/$argoCDVersion/manifests/install.yaml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 cd resources/render/
 kustomize create app --recursive --autodetect
 cd ../../../..
-echo "Upgraded argocd"
+echo "Upgraded argocd to $argoCDVersion"
 
 cd k8s/tekton
 rm -rf resources/render/
@@ -100,5 +101,5 @@ cp -R $tempdir/externaldns/kustomize/* resources/render
 kustomize edit set image k8s.gcr.io/external-dns/external-dns:$externalDNSOperatorVersion 
 echo "Upgraded external-dns to $externalDNSOperatorVersion"
 
-# Cleanup
+# # Cleanup
 rm -rf $tempdir

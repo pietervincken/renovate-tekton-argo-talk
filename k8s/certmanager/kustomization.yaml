@@ -4,4 +4,3 @@ resources:
   - resources/render
   - resources/prod-clusterissuer.yaml
   - resources/staging-clusterissuer.yaml
-# namespace: cert-manager

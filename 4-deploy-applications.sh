@@ -33,5 +33,7 @@ az aks get-credentials -g $rgruntime -n renovate-talk-k8s --admin
 
 # kubectl apply -k k8s/tekline
 
-kubectl apply -k k8s/argocd # first attempt will fail due to missing crds
-kubectl apply -k k8s/argocd
+# kubectl apply -k k8s/argocd # first attempt will fail due to missing crds
+# kubectl apply -k k8s/argocd
+
+kubectl apply -k k8s/renovate

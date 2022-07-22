@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-stripprefix@kubernetescrd
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - renovate-talk.pietervincken.com
+      secretName: tls
+  rules:
+    - host: renovate-talk.pietervincken.com
+      http:
+        paths:
+          - path: /argocd
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
