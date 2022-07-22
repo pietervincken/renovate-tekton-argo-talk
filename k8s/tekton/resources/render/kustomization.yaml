@@ -27,3 +27,4 @@ resources:
 - tektonpipelines.operator.tekton.dev-CustomResourceDefinition.yml
 - tektonresults.operator.tekton.dev-CustomResourceDefinition.yml
 - tektontriggers.operator.tekton.dev-CustomResourceDefinition.yml
+namespace: tekton-operator

@@ -62,6 +62,7 @@ curl -s https://raw.githubusercontent.com/tektoncd/operator/main/config/crs/kube
 rm .yml
 cd resources/render/
 kustomize create app --recursive --autodetect
+kustomize edit set namespace tekton-operator
 cd ../../../..
 echo "Upgraded tekton"
 
