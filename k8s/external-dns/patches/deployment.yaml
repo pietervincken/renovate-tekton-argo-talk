@@ -1,0 +1,26 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --provider=azure
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --txt-prefix=externaldns-
+# - op: add
+#   path: /spec/template/spec/containers/0/args/-
+#   value: --domain-filter=
+- op: add
+  path: /spec/template/metadata/labels/aadpodidbinding
+  value: external-dns
+
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+    - name: azure-config-file
+      mountPath: /etc/kubernetes
+      readOnly: true
+
+- op: add
+  path: /spec/template/spec/volumes
+  value:
+    - name: azure-config-file
+      secret:
+        secretName: azure-config-file

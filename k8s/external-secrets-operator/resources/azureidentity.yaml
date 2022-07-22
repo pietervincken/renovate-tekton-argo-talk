@@ -6,5 +6,5 @@ metadata:
     aadpodidentity.k8s.io/Behavior: namespaced
 spec:
   type: 0
-  resourceID: <resourceID>
-  clientID: <clientID>
+  resourceID: /subscriptions/467811c4-023c-4b77-8511-54b5b2eac549/resourceGroups/rg-renovate-talk/providers/Microsoft.ManagedIdentity/userAssignedIdentities/external-secrets-operator
+  clientID: 2d5389b3-5834-431c-8be4-34921bd16022

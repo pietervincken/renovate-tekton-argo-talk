@@ -3,3 +3,25 @@ kind: Kustomization
 
 resources:
   - resources/render
+  - resources/azureidentity.yaml
+  - resources/azureidentitybinding.yaml
+  - resources/ns.yaml
+
+images:
+  - name: k8s.gcr.io/external-dns/external-dns
+    newTag: v0.12.0
+
+patches:
+  - target:
+      name: external-dns
+      kind: Deployment
+      group: apps
+      version: v1
+    path: patches/deployment.yaml
+
+secretGenerator:
+  - name: azure-config-file
+    files:
+      - secrets/azure.json
+
+namespace: external-dns
