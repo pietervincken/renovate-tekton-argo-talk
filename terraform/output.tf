@@ -21,3 +21,7 @@ output "domain" {
 output "keyvault" {
   value = azurerm_key_vault.keyvault.name
 }
+
+output "rg_runtime" {
+  value = azurerm_resource_group.rg.name
+}
