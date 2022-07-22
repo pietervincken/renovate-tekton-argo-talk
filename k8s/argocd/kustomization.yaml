@@ -10,6 +10,7 @@ resources:
   - resources/tekton-argoapp.yaml
   - resources/traefik-argoapp.yaml
   - secrets/githubcredentials-externalsecret.yaml
+  - secrets/argocd-secret-externalsecret.yaml
 namespace: argocd
 
 patches:
