@@ -1,19 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- resources/crds/azureassignedidentities.aadpodidentity.k8s.io.yml
-- resources/crds/azureidentities.aadpodidentity.k8s.io.yml
-- resources/crds/azureidentitybindings.aadpodidentity.k8s.io.yml
-- resources/crds/azurepodidentityexceptions.aadpodidentity.k8s.io.yml
-- resources/ns.yaml
-- resources/render/aad-pod-identity-mic-ClusterRole.yml
-- resources/render/aad-pod-identity-mic-ClusterRoleBinding.yml
-- resources/render/aad-pod-identity-mic-Deployment.yml
-- resources/render/aad-pod-identity-mic-Secret.yml
-- resources/render/aad-pod-identity-mic-ServiceAccount.yml
-- resources/render/aad-pod-identity-nmi-ClusterRole.yml
-- resources/render/aad-pod-identity-nmi-ClusterRoleBinding.yml
-- resources/render/aad-pod-identity-nmi-DaemonSet.yml
-- resources/render/aad-pod-identity-nmi-ServiceAccount.yml
-- resources/render/aks-addon-exception-AzurePodIdentityException.yml
-- resources/render/mic-AzurePodIdentityException.yml
+  - resources/crds/
+  - resources/render/
+  - resources/ns.yaml
+namespace: aad-pod-identity

@@ -8,3 +8,5 @@ configMapGenerator:
   - name: renovate-config
     files:
       - configs/config.json
+
+namespace: renovate

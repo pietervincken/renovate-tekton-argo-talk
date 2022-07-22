@@ -1,27 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- resources/ns.yaml
-- resources/render/clusterexternalsecrets.external-secrets.io-CustomResourceDefinition.yml
-- resources/render/clustersecretstores.external-secrets.io-CustomResourceDefinition.yml
-- resources/render/external-secrets-Deployment.yml
-- resources/render/external-secrets-ServiceAccount.yml
-- resources/render/external-secrets-cert-controller-ClusterRole.yml
-- resources/render/external-secrets-cert-controller-ClusterRoleBinding.yml
-- resources/render/external-secrets-cert-controller-Deployment.yml
-- resources/render/external-secrets-cert-controller-ServiceAccount.yml
-- resources/render/external-secrets-controller-ClusterRole.yml
-- resources/render/external-secrets-controller-ClusterRoleBinding.yml
-- resources/render/external-secrets-edit-ClusterRole.yml
-- resources/render/external-secrets-leaderelection-Role.yml
-- resources/render/external-secrets-leaderelection-RoleBinding.yml
-- resources/render/external-secrets-view-ClusterRole.yml
-- resources/render/external-secrets-webhook-Deployment.yml
-- resources/render/external-secrets-webhook-Secret.yml
-- resources/render/external-secrets-webhook-Service.yml
-- resources/render/external-secrets-webhook-ServiceAccount.yml
-- resources/render/externalsecret-validate-ValidatingWebhookConfiguration.yml
-- resources/render/externalsecrets.external-secrets.io-CustomResourceDefinition.yml
-- resources/render/secretstore-validate-ValidatingWebhookConfiguration.yml
-- resources/render/secretstores.external-secrets.io-CustomResourceDefinition.yml
-- resources/secretstore.yaml
+  - resources/render/
+
+  - resources/azureidentity.yaml
+  - resources/azureidentitybinding.yaml
+  - resources/ns.yaml
+  - resources/secretstore.yaml
+  # - resources/test-secret.yaml
+
+patches:
+  - target:
+      name: external-secrets
+      kind: Deployment
+      group: apps
+      version: v1
+    path: patches/azureidentitybinding-label.yaml
+namespace: external-secrets

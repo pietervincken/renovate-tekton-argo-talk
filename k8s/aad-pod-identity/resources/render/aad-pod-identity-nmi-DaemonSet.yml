@@ -63,7 +63,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: FORCENAMESPACED
-              value: "true"
+              value: "false"
           securityContext:
             runAsUser: 0
             capabilities:

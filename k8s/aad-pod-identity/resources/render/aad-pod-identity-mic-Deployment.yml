@@ -29,7 +29,7 @@ spec:
         helm.sh/chart: aad-pod-identity-4.1.11
         app.kubernetes.io/component: mic
       annotations:
-        checksum/config: cf4ae26b548b324d3b3b7a77e4b1ab0b2a7b4439fe052a5ec16c9da191c9cb5e
+        checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
     spec:
       serviceAccountName: aad-pod-identity-mic
       containers:
@@ -37,8 +37,10 @@ spec:
           image: "mcr.microsoft.com/oss/azure/aad-pod-identity/mic:v1.8.10"
           imagePullPolicy: IfNotPresent
           args:
+            - "--cloudconfig=/etc/kubernetes/azure.json"
             - "--logtostderr"
           securityContext:
+            runAsUser: 0
             readOnlyRootFilesystem: true
           env:
             - name: MIC_POD_NAMESPACE
@@ -46,52 +48,11 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: FORCENAMESPACED
-              value: "true"
-            - name: CLOUD
-              valueFrom:
-                secretKeyRef:
-                  key: Cloud
-                  name: aad-pod-identity-mic
-            - name: SUBSCRIPTION_ID
-              valueFrom:
-                secretKeyRef:
-                  key: SubscriptionID
-                  name: aad-pod-identity-mic
-            - name: RESOURCE_GROUP
-              valueFrom:
-                secretKeyRef:
-                  key: ResourceGroup
-                  name: aad-pod-identity-mic
-            - name: VM_TYPE
-              valueFrom:
-                secretKeyRef:
-                  key: VMType
-                  name: aad-pod-identity-mic
-            - name: TENANT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: TenantID
-                  name: aad-pod-identity-mic
-            - name: CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: ClientID
-                  name: aad-pod-identity-mic
-            - name: CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  key: ClientSecret
-                  name: aad-pod-identity-mic
-            - name: USE_MSI
-              valueFrom:
-                secretKeyRef:
-                  key: UseMSI
-                  name: aad-pod-identity-mic
-            - name: USER_ASSIGNED_MSI_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  key: UserAssignedMSIClientID
-                  name: aad-pod-identity-mic
+              value: "false"
+          volumeMounts:
+            - name: k8s-azure-file
+              mountPath: /etc/kubernetes/azure.json
+              readOnly: true
           livenessProbe:
             httpGet:
               path: /healthz
@@ -105,6 +66,10 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+      volumes:
+        - name: k8s-azure-file
+          hostPath:
+            path: /etc/kubernetes/azure.json
       nodeSelector:
         kubernetes.io/os: linux
       affinity:

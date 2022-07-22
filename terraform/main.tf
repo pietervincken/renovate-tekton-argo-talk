@@ -151,13 +151,3 @@ resource "azurerm_key_vault_access_policy" "external_secrets_operator" {
   ]
 
 }
-
-# resource "azurerm_key_vault_secret" "mysecret" {
-#   name         = "mysecret"
-#   key_vault_id = azurerm_key_vault.keyvault.id
-#   value        = "hello-world"
-
-#   depends_on = [
-#     azurerm_key_vault_access_policy.myaccess
-#   ]
-# }
