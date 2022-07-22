@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
   - resources/render/
   - resources/ingress.yaml
+  - resources/externaldns-argoapp.yaml
+  - secrets/githubcredentials-externalsecret.yaml
 namespace: argocd
 
 patches:
@@ -12,3 +14,7 @@ patches:
       version: v1
       name: argocd-server
     path: patches/deployment.yaml
+
+replicas:
+  - name: argocd-dex-server
+    count: 0

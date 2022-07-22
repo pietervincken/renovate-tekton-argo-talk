@@ -7,4 +7,4 @@ metadata:
 spec:
   type: 0
   resourceID: /subscriptions/467811c4-023c-4b77-8511-54b5b2eac549/resourceGroups/rg-renovate-talk/providers/Microsoft.ManagedIdentity/userAssignedIdentities/external-secrets-operator
-  clientID: 2d5389b3-5834-431c-8be4-34921bd16022
+  clientID: a1f1726a-8842-45bc-bdf4-ece3627e190e

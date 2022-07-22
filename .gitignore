@@ -34,8 +34,4 @@ override.tf.json
 .env
 terraform/output.json
 
-# Contains sensitive info after helm setup. 
-k8s/aad-pod-identity/resources/render/aad-pod-identity-mic-Secret.yml
-k8s/external-dns/secrets/azure.json
-
 temp/
