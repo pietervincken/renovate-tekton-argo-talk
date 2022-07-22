@@ -21,8 +21,9 @@ provider "azuread" {
 
 locals {
 
-  email = "pieter.vincken@ordina.be"
-  name  = "renovate-talk"
+  email       = "pieter.vincken@ordina.be"
+  name        = "renovate-talk"
+  base_domain = "pietervincken.com"
 
   common_tags = {
     created-by = local.email
@@ -150,4 +151,23 @@ resource "azurerm_key_vault_access_policy" "external_secrets_operator" {
     "Get", "List"
   ]
 
+}
+
+# DNS Zone for this project
+resource "azurerm_dns_zone" "domain" {
+  name                = "renovate-talk.${local.base_domain}"
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_user_assigned_identity" "external_dns_operator" {
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  name                = "external-dns-operator"
+}
+
+# External DNS operator permissions on dns zone
+resource "azurerm_role_assignment" "external_dns_operator" {
+  scope                = azurerm_dns_zone.domain.id
+  role_definition_name = "DNS Zone Contributor"
+  principal_id         = azurerm_user_assigned_identity.external_dns_operator.principal_id
 }
