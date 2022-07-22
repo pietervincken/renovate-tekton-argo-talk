@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - resources/deployment.yaml
   - resources/secret.yaml
+  - resources/ns.yaml
 
 configMapGenerator:
   - name: renovate-config

@@ -3,10 +3,7 @@
   value: --provider=azure
 - op: add
   path: /spec/template/spec/containers/0/args/-
-  value: --txt-prefix=externaldns-
-# - op: add
-#   path: /spec/template/spec/containers/0/args/-
-#   value: --domain-filter=
+  value: --txt-owner-id=renovate-talk
 - op: add
   path: /spec/template/metadata/labels/aadpodidbinding
   value: external-dns

@@ -55,3 +55,12 @@ cat <<EOF > k8s/external-dns/secrets/azure.json
 }
 EOF
 
+domain=$(cat terraform/output.json| jq --raw-output '.domain.value')
+
+if [ -z $domain ]; then
+    echo "Could not find domain. Stopping!"
+    exit 1
+fi
+
+yq -i ".[0].value.[\"external-dns.alpha.kubernetes.io/hostname\"] |= \"*.$domain\"" k8s/traefik/patches/service.yaml 
+

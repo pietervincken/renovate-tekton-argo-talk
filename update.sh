@@ -17,14 +17,12 @@ helm repo add external-secrets https://charts.external-secrets.io
 
 cd k8s/aad-pod-identity
 rm -rf resources/render resources/crds
-mkdir -p resources/render resources/crds 
-
+mkdir -p resources/render resources/crds
 helm template aad-pod-identity \
     aad-pod-identity/aad-pod-identity \
     -n aad-pod-identity \
     --create-namespace \
     | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-
 curl -s https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts/aad-pod-identity/crds/crd.yaml | yq -s '"resources/crds/" + .metadata.name + ".yml"' -
 cd resources/render
 kustomize create app --recursive --autodetect
@@ -67,7 +65,6 @@ kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded tekton"
 
-
 certManagerVersion=$(get_latest_release "cert-manager/cert-manager")
 cd k8s/certmanager
 rm -rf resources/render/
@@ -78,7 +75,6 @@ kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded certmanager to $certManagerVersion"
 
-
 cd k8s/traefik
 rm -rf resources/render/
 mkdir -p resources/render
@@ -86,6 +82,8 @@ helm template traefik traefik/traefik \
   -n traefik \
   --set globalArguments= \
   | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -sL https://raw.githubusercontent.com/traefik/traefik/v2.8/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -sL https://raw.githubusercontent.com/traefik/traefik/v2.8/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 cd resources/render/
 kustomize create app --recursive --autodetect
 cd ../../../..

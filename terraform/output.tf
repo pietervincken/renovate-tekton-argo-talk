@@ -13,3 +13,7 @@ output "external_dns_client_id" {
 output "external_dns_resource_id" {
   value = azurerm_user_assigned_identity.external_dns_operator.id
 }
+
+output "domain" {
+  value = azurerm_dns_zone.domain.name
+}

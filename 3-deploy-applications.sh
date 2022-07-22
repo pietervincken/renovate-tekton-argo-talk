@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 if [ -z $rgruntime ]; then
     echo "Could not find rgruntime. Stopping!"
     exit 1
@@ -25,3 +23,6 @@ kubectl apply -k k8s/external-secrets-operator
 kubectl apply -k k8s/external-dns # first attempt will fail due to missing crds
 kubectl apply -k k8s/external-dns
 
+
+kubectl apply -k k8s/traefik # first attempt will fail due to missing crds
+kubectl apply -k k8s/traefik
