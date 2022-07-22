@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-dns
+  name: tekline
 spec:
   project: default
   source:
     repoURL: git@github.com:pietervincken/renovate-tekton-argo-talk.git
     targetRevision: 1-create-demo
-    path: k8s/external-dns
+    path: k8s/tekline
   destination:
     server: https://kubernetes.default.svc
-    namespace: external-dns
+    namespace: tekline
   syncPolicy:
     automated:
       prune: true
