@@ -4,18 +4,18 @@ metadata:
   name: tekton-dashboard
   namespace: tekton-pipelines
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-stripprefix@kubernetescrd
+    # traefik.ingress.kubernetes.io/router.middlewares: traefik-stripprefix@kubernetescrd
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
     - hosts:
-        - renovate-talk.pietervincken.com
+        - tekton.renovate-talk.pietervincken.com
       secretName: tls
   rules:
-    - host: renovate-talk.pietervincken.com
+    - host: tekton.renovate-talk.pietervincken.com
       http:
         paths:
-          - path: /dashboard
+          - path: /
             pathType: Prefix
             backend:
               service:
