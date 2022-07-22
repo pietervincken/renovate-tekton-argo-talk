@@ -46,3 +46,4 @@ export githubmail="xxx" # public email of github account. (github email, not pri
 - Configure ArgoCD
 - Create Github secret in TF
 - Document manual actions
+- (Optional) Create ACR and push all images to ACR before demo.
