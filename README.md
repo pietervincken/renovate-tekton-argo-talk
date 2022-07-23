@@ -32,8 +32,9 @@ export sastate="sarenovatetalkstate" #changeme as this needs to be globally uniq
 export subscription="xxxx1234-1234-1234-1234-xxxxxx123456" #changeme to your own subscription
 export tenant="" # add your tenant id here. Required for setting up rights to k8s
 export ARM_TENANT_ID=$tenant # needed in both formats
-export token="ghp_xxx" # GitHub PAT token. Only needed for renovate Github API rate limiting. Only needs a token, no rights required.
+export githubpat="ghp_xxx" # GitHub PAT token. Needs write access to read and update your github repos.
 export githubmail="xxx" # public email of github account. (github email, not private email). Used for SSH key generation
+export githubtrigger="xxx" # Token used to validate push webhooks from Github. 
 ```
 
 

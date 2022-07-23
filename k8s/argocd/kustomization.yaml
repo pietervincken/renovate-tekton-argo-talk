@@ -5,7 +5,7 @@ resources:
   - resources/externaldns-argoapp.yaml
   - resources/ingress.yaml
   - resources/render/
-  # - resources/renovate-argoapp.yaml
+  - resources/renovate-argoapp.yaml
   - resources/tekline-argoapp.yaml
   - resources/tekton-argoapp.yaml
   - resources/traefik-argoapp.yaml
