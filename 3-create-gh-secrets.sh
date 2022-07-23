@@ -24,6 +24,8 @@ if [ -z $githubtrigger ]; then
     exit 1
 fi
 
+echo "Found all properties. Checking secrets now."
+
 tempdir=$(mktemp -d)
 
 ssh-keygen -t ed25519 -C $githubmail -f $tempdir/gh-key -q -N ""

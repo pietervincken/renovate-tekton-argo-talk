@@ -12,7 +12,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: cert-manager
   syncPolicy:
-    # {}
     automated:
       prune: true
       selfHeal: true
@@ -29,3 +28,8 @@ spec:
         - /webhooks/5/clientConfig/caBundle
         - /webhooks/6/clientConfig/caBundle
         - /webhooks/7/clientConfig/caBundle
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: cert-manager-webhook
+      jsonPointers:
+        - /webhooks/0/namespaceSelector/matchExpressions/2

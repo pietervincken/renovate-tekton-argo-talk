@@ -58,3 +58,5 @@ cat <<EOF > k8s/external-dns/secrets/azure.json
     "userAssignedIdentityID": "$edClientId"
 }
 EOF
+
+echo "Done. Don't forget to add the NS record for the subdomain to your registrar!"
