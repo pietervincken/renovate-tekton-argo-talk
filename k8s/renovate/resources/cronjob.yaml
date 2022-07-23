@@ -3,7 +3,8 @@ kind: CronJob
 metadata:
   name: renovate
 spec:
-  schedule: "0-59/5 * * * *" #Every 5 minutes, for demo purposes only!
+  # schedule: "0-59/5 * * * *" #Every 5 minutes, for demo purposes only!
+  schedule: "0 1 * * *" #At 1 every night.
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -13,7 +14,8 @@ spec:
             - name: renovate
               # Update this to the latest available and then enable Renovate on
               # the manifest
-              image: renovate/renovate:32.107.1
+              # image: renovate/renovate:32.124.0
+              image: renovate/renovate:32.124.0-slim
               # Environment Variables
               envFrom:
                 - secretRef:
