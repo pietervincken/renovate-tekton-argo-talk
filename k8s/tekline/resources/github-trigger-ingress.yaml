@@ -13,7 +13,7 @@ spec:
     - host: tekline.renovate-talk.pietervincken.com
       http:
         paths:
-          - path: /tekline
+          - path: /
             pathType: Prefix
             backend:
               service:
