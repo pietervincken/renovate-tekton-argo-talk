@@ -40,11 +40,6 @@ export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 
 ## TODO
 
-- Create secrets template for Renovate secrets (Github access)
-- Create secrets template for ArgoCD secrets (Github access)
 - Setup repositories for Demo applications. 
-- Configure Renovate
-- Configure ArgoCD
-- Create Github secret in TF
-- Document manual actions
 - (Optional) Create ACR and push all images to ACR before demo.
+- Create "real" pipeline
