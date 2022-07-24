@@ -3,14 +3,15 @@ kind: Kustomization
 resources:
   - resources/certmanager-argoapp.yaml
   - resources/externaldns-argoapp.yaml
+  - resources/grafana-argoapp.yaml
   - resources/ingress.yaml
   - resources/render/
   - resources/renovate-argoapp.yaml
   - resources/tekline-argoapp.yaml
   - resources/tekton-argoapp.yaml
   - resources/traefik-argoapp.yaml
-  - secrets/githubcredentials-externalsecret.yaml
   - secrets/argocd-secret-externalsecret.yaml
+  - secrets/githubcredentials-externalsecret.yaml
 namespace: argocd
 
 patches:

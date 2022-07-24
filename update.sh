@@ -7,14 +7,14 @@ tempdir=$(mktemp -d)
 ### Helper
 get_latest_release() {
   curl --silent "https://api.github.com/repos/$1/releases" |                 # Get latest release from GitHub api
-  jq --raw-output 'map(select(.tag_name |  test("^v.*"))) | map(select(.tag_name | test(".*beta.*")|not)) | map(select(.tag_name | test(".*alpha.*")|not)) | map(select(.tag_name | test(".*rc.*")|not)) | first | .tag_name'  # get the tag from tag_name
+  jq --raw-output 'map(select(.tag_name |  test("^v.*"))) | map(select(.prerelease | not)) | map(select(.tag_name | test(".*beta.*")|not)) | map(select(.tag_name | test(".*alpha.*")|not)) | map(select(.tag_name | test(".*rc.*")|not)) | first | .tag_name'  # get the tag from tag_name
 }
 
-helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
-helm repo add traefik https://helm.traefik.io/traefik
-helm repo add external-secrets https://charts.external-secrets.io
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
+# helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
+# helm repo add traefik https://helm.traefik.io/traefik
+# helm repo add external-secrets https://charts.external-secrets.io
+# helm repo add grafana https://grafana.github.io/helm-charts
+# helm repo update
 
 cd k8s/aad-pod-identity
 rm -rf resources/render resources/crds
