@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate
+spec:
+  # schedule: "0-59/5 * * * *" #Every 5 minutes, for demo purposes only!
+  schedule: "0 1 * * *" #At 1 every night.
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: renovate
+              # Update this to the latest available and then enable Renovate on
+              # the manifest
+              # image: renovate/renovate:32.125.0
+              image: renovate/renovate:32.125.0-slim
+              # Environment Variables
+              envFrom:
+                - secretRef:
+                    name: renovate-env
+              env:
+                - name: LOG_LEVEL
+                  value: debug
+                - name: RENOVATE_CONFIG_FILE
+                  value: "/opt/renovate/config.json"
+                - name: RENOVATE_BASE_DIR
+                  value: "/tmp/renovate/"
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /opt/renovate/
+                - name: work-volume
+                  mountPath: /tmp/renovate/
+          restartPolicy: Never
+          volumes:
+            - name: config-volume
+              configMap:
+                name: renovate-config
+            - name: work-volume
+              emptyDir: {}

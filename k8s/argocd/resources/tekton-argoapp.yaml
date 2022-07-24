@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tekton
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:pietervincken/renovate-tekton-argo-talk.git
+    targetRevision: 1-create-demo
+    path: k8s/tekton
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tekton-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

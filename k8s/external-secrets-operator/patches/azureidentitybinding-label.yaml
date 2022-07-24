@@ -1,0 +1,3 @@
+- op: add
+  path: /spec/template/metadata/labels/aadpodidbinding
+  value: external-secrets-operator

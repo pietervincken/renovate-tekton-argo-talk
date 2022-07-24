@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tekline
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:pietervincken/renovate-tekton-argo-talk.git
+    targetRevision: 1-create-demo
+    path: k8s/tekline
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tekline
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

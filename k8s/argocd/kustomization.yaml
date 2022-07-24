@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - resources/certmanager-argoapp.yaml
+  - resources/externaldns-argoapp.yaml
+  - resources/ingress.yaml
+  - resources/render/
+  - resources/renovate-argoapp.yaml
+  - resources/tekline-argoapp.yaml
+  - resources/tekton-argoapp.yaml
+  - resources/traefik-argoapp.yaml
+  - secrets/githubcredentials-externalsecret.yaml
+  - secrets/argocd-secret-externalsecret.yaml
+namespace: argocd
+
+patches:
+  - target:
+      kind: Deployment
+      group: apps
+      version: v1
+      name: argocd-server
+    path: patches/deployment.yaml
+
+replicas:
+  - name: argocd-dex-server
+    count: 0

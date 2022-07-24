@@ -1,0 +1,12 @@
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --accesslog
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --entrypoints.websecure.http.tls
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --accesslog
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: --accesslog

@@ -1,0 +1,35 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: github-template
+spec:
+  params:
+    - name: gitrevision
+    - name: gitrepositoryurl
+    - name: gitrepositoryname
+    - name: gitpushuseremail
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: github-run-
+        namespace: tekline
+      spec:
+        serviceAccountName: delegate-pipeline
+        podTemplate:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+        pipelineRef:
+          name: delegate-pipeline
+        params:
+          - name: git-url
+            value: $(tt.params.gitrepositoryurl)
+          - name: git-revision
+            value: $(tt.params.gitrevision)
+          - name: git-repository-name
+            value: $(tt.params.gitrepositoryname)
+          - name: git-push-user-email
+            value: $(tt.params.gitpushuseremail)

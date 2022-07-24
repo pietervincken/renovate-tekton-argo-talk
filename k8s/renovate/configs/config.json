@@ -1,0 +1,7 @@
+{
+    "repositories": [
+        "pietervincken/renovate-talk-demo-app",
+        "pietervincken/renovate-tekton-argo-talk"
+    ],
+    "platform": "github"
+}

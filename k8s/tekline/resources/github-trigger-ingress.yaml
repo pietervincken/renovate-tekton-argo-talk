@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-eventlistener
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - tekline.renovate-talk.pietervincken.com
+      secretName: tls
+  rules:
+    - host: tekline.renovate-talk.pietervincken.com
+      http:
+        paths:
+          - path: /tekline
+            pathType: Prefix
+            backend:
+              service:
+                name: el-github-listener
+                port:
+                  name: http-listener
