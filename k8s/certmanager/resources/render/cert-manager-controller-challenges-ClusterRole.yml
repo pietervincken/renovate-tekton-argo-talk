@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: cert-manager
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "controller"
-    app.kubernetes.io/version: "v1.8.2"
+    app.kubernetes.io/version: "v1.9.0"
 rules:
   # Use to update challenge resource status
   - apiGroups: ["acme.cert-manager.io"]

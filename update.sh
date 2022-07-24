@@ -13,7 +13,8 @@ get_latest_release() {
 helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo add external-secrets https://charts.external-secrets.io
-# helm repo update
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
 
 cd k8s/aad-pod-identity
 rm -rf resources/render resources/crds
@@ -99,7 +100,22 @@ mkdir -p resources/render
 cp -R $tempdir/externaldns/kustomize/* resources/render
 # Stupid workaround for properly doing this :facepalm:
 kustomize edit set image k8s.gcr.io/external-dns/external-dns:$externalDNSOperatorVersion 
+cd ../../
 echo "Upgraded external-dns to $externalDNSOperatorVersion"
+
+cd k8s/grafana
+rm -rf resources/render/
+mkdir -p resources/render
+helm template grafana \
+   grafana/grafana \
+    -n grafana \
+    --set testFramework.enabled=false	\
+    --set ingress.enabled=true	\
+    --create-namespace | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded grafana"
 
 # # Cleanup
 rm -rf $tempdir

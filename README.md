@@ -37,7 +37,6 @@ export githubmail="xxx" # public email of github account. (github email, not pri
 export githubtrigger="xxx" # Token used to validate push webhooks from Github. 
 ```
 
-
 ## TODO
 
 - Setup repositories for Demo applications. 

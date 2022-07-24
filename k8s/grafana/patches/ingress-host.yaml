@@ -1,0 +1,13 @@
+- op: replace
+  path: /spec/rules/0/host
+  value: grafana.renovate-talk.pietervincken.com
+- op: add
+  path: /spec/tls
+  value:
+    - hosts:
+        - grafana.renovate-talk.pietervincken.com
+      secretName: tls
+- op: add
+  path: /metadata/annotations
+  value:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
