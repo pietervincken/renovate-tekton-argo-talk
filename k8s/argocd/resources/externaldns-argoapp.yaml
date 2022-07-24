@@ -6,7 +6,7 @@ spec:
   project: default
   source:
     repoURL: git@github.com:pietervincken/renovate-tekton-argo-talk.git
-    targetRevision: 1-create-demo
+    targetRevision: main
     path: k8s/external-dns
   destination:
     server: https://kubernetes.default.svc
