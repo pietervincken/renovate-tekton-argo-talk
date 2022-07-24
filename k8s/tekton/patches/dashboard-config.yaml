@@ -2,3 +2,7 @@
   path: /spec/dashboard
   value:
     readonly: true
+
+- op: add
+  path: /spec/pruner
+  value: null
