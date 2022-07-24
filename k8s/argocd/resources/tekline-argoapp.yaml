@@ -13,22 +13,5 @@ spec:
     namespace: tekline
   syncPolicy:
     automated:
-      prune: true
+      prune: false # otherwise Tekline PR, TRs and pods will be automatically pruned.
       selfHeal: true
-
-  ignoreDifferences:
-    - group: tekton.dev
-      version: v1beta1
-      kind: Pipeline
-
-    - group: tekton.dev
-      version: v1beta1
-      kind: Task
-
-    - group: tekton.dev
-      version: v1beta1
-      kind: PipelineRun
-
-    - group: tekton.dev
-      version: v1beta1
-      kind: TaskRun
