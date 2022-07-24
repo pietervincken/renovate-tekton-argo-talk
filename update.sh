@@ -22,7 +22,6 @@ mkdir -p resources/render resources/crds
 helm template aad-pod-identity \
     aad-pod-identity/aad-pod-identity \
     -n aad-pod-identity \
-    --create-namespace \
     | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 curl -s https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts/aad-pod-identity/crds/crd.yaml | yq -s '"resources/crds/" + .metadata.name + ".yml"' -
 cd resources/render
@@ -38,7 +37,6 @@ mkdir -p resources/render
 helm template external-secrets \
    external-secrets/external-secrets \
     -n external-secrets \
-    --create-namespace \
     --set installCRDs=true | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 cd resources/render
 kustomize create app --recursive --autodetect
@@ -111,7 +109,7 @@ helm template grafana \
     -n grafana \
     --set testFramework.enabled=false	\
     --set ingress.enabled=true	\
-    --create-namespace | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+    | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 cd resources/render
 kustomize create app --recursive --autodetect
 cd ../../../..
