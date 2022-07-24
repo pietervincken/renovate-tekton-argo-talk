@@ -59,4 +59,6 @@ cat <<EOF > k8s/external-dns/secrets/azure.json
 }
 EOF
 
-echo "Done. Don't forget to add the NS record for the subdomain to your registrar!"
+echo "Done. "
+echo "Don't forget to add the NS record for the subdomain to your registrar!"
+echo "Don't forget to push the updated MSIs!"

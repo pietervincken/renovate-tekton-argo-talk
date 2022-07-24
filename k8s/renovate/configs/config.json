@@ -2,6 +2,5 @@
     "repositories": [
         "pietervincken/renovate-talk-demo-app"
     ],
-    "platform": "github",
-    "dryRun": "true"
+    "platform": "github"
 }
