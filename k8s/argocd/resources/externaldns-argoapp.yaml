@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: external-dns
   annotations:
-    argocd.argoproj.io/manifest-generate-paths: k8s/external-dns
+    argocd.argoproj.io/manifest-generate-paths: .
 spec:
   project: default
   source:

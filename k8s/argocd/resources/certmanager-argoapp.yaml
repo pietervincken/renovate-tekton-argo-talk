@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: certmanager
   annotations:
-    argocd.argoproj.io/manifest-generate-paths: k8s/certmanager
+    argocd.argoproj.io/manifest-generate-paths: .
 spec:
   project: default
   source:

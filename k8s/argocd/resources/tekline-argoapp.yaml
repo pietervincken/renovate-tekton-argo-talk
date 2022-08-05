@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: tekline
   annotations:
-    argocd.argoproj.io/manifest-generate-paths: k8s/tekline
+    argocd.argoproj.io/manifest-generate-paths: .
 spec:
   project: default
   source:
