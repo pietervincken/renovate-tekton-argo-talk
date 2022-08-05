@@ -97,6 +97,7 @@ spec:
             - "--metrics.prometheus.entrypoint=metrics"
             - "--providers.kubernetescrd"
             - "--providers.kubernetesingress"
+            - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
       volumes:
         - name: data
           emptyDir: {}
