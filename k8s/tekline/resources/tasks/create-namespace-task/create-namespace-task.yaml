@@ -15,6 +15,9 @@ spec:
   steps:
     - name: create-namespace
       image: "$(params.TEKLINE_IMAGE)"
+      volumeMounts:
+        - name: scripts
+          mountPath: /scripts
       script: |
         #!/bin/bash
         set -euxo pipefail
@@ -99,5 +102,12 @@ spec:
         jq -s '.[].secrets = ([.[].secrets]|flatten) | .[0]' ${sa} ${secrets} > ${newsa}
         kubectl apply -f ${newsa}
 
+        kubectl apply -f /scripts
+
 
         echo ${namespace} | tee $(results.namespace.path)
+
+  volumes:
+    - name: scripts
+      configMap:
+        name: create-namespace-scripts

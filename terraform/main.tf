@@ -45,6 +45,27 @@ resource "azurerm_resource_group" "rg" {
   location = local.location
 }
 
+resource "azurerm_container_registry" "acr" {
+  name                = replace("${local.name}-acr", "-", "")
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "Basic"
+  admin_enabled       = false
+}
+
+resource "azurerm_role_assignment" "k8s_to_acr" {
+  principal_id                     = azurerm_kubernetes_cluster.cluster.kubelet_identity[0].object_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.acr.id
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "user_to_acr" {
+  principal_id         = data.azuread_user.user.object_id
+  role_definition_name = "AcrPush"
+  scope                = azurerm_container_registry.acr.id
+}
+
 resource "azurerm_kubernetes_cluster" "cluster" {
   name                = "${local.name}-k8s"
   location            = azurerm_resource_group.rg.location
@@ -117,7 +138,7 @@ resource "azurerm_key_vault" "keyvault" {
   location            = azurerm_resource_group.rg.location
 }
 
-# Access for demo user to keyvault
+# Access for user to keyvault
 resource "azurerm_key_vault_access_policy" "admin_access" {
   key_vault_id = azurerm_key_vault.keyvault.id
   tenant_id    = azurerm_key_vault.keyvault.tenant_id
@@ -133,6 +154,8 @@ resource "azurerm_user_assigned_identity" "external_secrets_operator" {
   location            = azurerm_resource_group.rg.location
   name                = "external-secrets-operator"
 }
+
+
 
 resource "azurerm_key_vault_access_policy" "external_secrets_operator" {
   key_vault_id = azurerm_key_vault.keyvault.id
@@ -155,7 +178,7 @@ resource "azurerm_key_vault_access_policy" "external_secrets_operator" {
 
 # DNS Zone for this project
 resource "azurerm_dns_zone" "domain" {
-  name                = "renovate-talk.${local.base_domain}"
+  name                = "${local.name}.${local.base_domain}"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
@@ -170,4 +193,17 @@ resource "azurerm_role_assignment" "external_dns_operator" {
   scope                = azurerm_dns_zone.domain.id
   role_definition_name = "DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.external_dns_operator.principal_id
+}
+
+# Kaniko build (required for ACR push)
+resource "azurerm_user_assigned_identity" "kaniko" {
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  name                = "kaniko"
+}
+
+resource "azurerm_role_assignment" "kaniko_to_acr" {
+  principal_id         = azurerm_user_assigned_identity.kaniko.principal_id
+  role_definition_name = "AcrPush"
+  scope                = azurerm_container_registry.acr.id
 }

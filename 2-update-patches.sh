@@ -6,6 +6,8 @@ esClientId=$(cat terraform/output.json| jq --raw-output '.external_secrets_clien
 esResourceId=$(cat terraform/output.json| jq --raw-output '.external_secrets_resource_id.value')
 edClientId=$(cat terraform/output.json| jq --raw-output '.external_dns_client_id.value')
 edResourceId=$(cat terraform/output.json| jq --raw-output '.external_dns_resource_id.value')
+kanikoClientId=$(cat terraform/output.json| jq --raw-output '.kaniko_client_id.value')
+kanikoResourceId=$(cat terraform/output.json| jq --raw-output '.kaniko_resource_id.value')
 domain=$(cat terraform/output.json| jq --raw-output '.domain.value')
 
 if [ -z $esClientId ]; then
@@ -28,6 +30,16 @@ if [ -z $edResourceId ]; then
     exit 1
 fi
 
+if [ -z $kanikoClientId ]; then
+    echo "Could not find kanikoClientId. Stopping!"
+    exit 1
+fi
+
+if [ -z $kanikoResourceId ]; then
+    echo "Could not find kanikoResourceId. Stopping!"
+    exit 1
+fi
+
 if [ -z $subscription ]; then
     echo "Could not find subscription. Stopping!"
     exit 1
@@ -47,6 +59,10 @@ yq -i ".spec.resourceID |= \"$esResourceId\"" k8s/external-secrets-operator/reso
 yq -i ".spec.clientID |= \"$esClientId\"" k8s/external-secrets-operator/resources/azureidentity.yaml 
 yq -i ".spec.resourceID |= \"$edResourceId\"" k8s/external-dns/resources/azureidentity.yaml 
 yq -i ".spec.clientID |= \"$edClientId\"" k8s/external-dns/resources/azureidentity.yaml 
+
+yq -i ".spec.resourceID |= \"$kanikoResourceId\"" k8s/tekline/resources/tasks/create-namespace-task/kaniko-azureidentity.yaml 
+yq -i ".spec.clientID |= \"$kanikoClientId\"" k8s/tekline/resources/tasks/create-namespace-task/kaniko-azureidentity.yaml 
+
 yq -i ".[0].value.[\"external-dns.alpha.kubernetes.io/hostname\"] |= \"*.$domain\"" k8s/traefik/patches/service.yaml 
 
 cat <<EOF > k8s/external-dns/secrets/azure.json

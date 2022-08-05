@@ -1,0 +1,10 @@
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentity
+metadata:
+  name: kaniko
+  annotations:
+    aadpodidentity.k8s.io/Behavior: namespaced
+spec:
+  clientID: 345ae50a-6d97-4a52-944d-09ddd84be69d
+  resourceID: /subscriptions/467811c4-023c-4b77-8511-54b5b2eac549/resourceGroups/rg-renovate-talk/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kaniko
+  type: 0

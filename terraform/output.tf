@@ -14,6 +14,14 @@ output "external_dns_resource_id" {
   value = azurerm_user_assigned_identity.external_dns_operator.id
 }
 
+output "kaniko_client_id" {
+  value = azurerm_user_assigned_identity.kaniko.client_id
+}
+
+output "kaniko_resource_id" {
+  value = azurerm_user_assigned_identity.kaniko.id
+}
+
 output "domain" {
   value = azurerm_dns_zone.domain.name
 }
