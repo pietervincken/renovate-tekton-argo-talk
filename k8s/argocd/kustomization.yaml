@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - resources/certmanager-argoapp.yaml
   - resources/externaldns-argoapp.yaml
-  - resources/grafana-argoapp.yaml
   - resources/ingress.yaml
   - resources/render/
   - resources/renovate-argoapp.yaml
@@ -12,6 +11,7 @@ resources:
   - resources/traefik-argoapp.yaml
   - secrets/argocd-secret-externalsecret.yaml
   - secrets/githubcredentials-externalsecret.yaml
+  - https://github.com/pietervincken/renovate-talk-microservice-demo.git//argocd?ref=main
 namespace: argocd
 
 patches:
