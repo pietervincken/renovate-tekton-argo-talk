@@ -22,6 +22,11 @@ patches:
       name: argocd-server
     path: patches/deployment.yaml
 
+  - target:
+      kind: ConfigMap
+      name: argocd-cm
+    path: patches/configmap.yaml
+
 replicas:
   - name: argocd-dex-server
     count: 0

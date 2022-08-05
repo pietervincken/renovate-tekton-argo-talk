@@ -1,0 +1,11 @@
+- op: add
+  path: /data
+  value:
+    resource.exclusions: |
+      - apiGroups:
+          - tekton.dev
+        kinds:
+          - PipelineRun
+          - TaskRun
+        clusters:
+          - https://kubernetes.default.svc
