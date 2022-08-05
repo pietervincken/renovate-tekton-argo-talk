@@ -22,6 +22,7 @@ mkdir -p resources/render resources/crds
 helm template aad-pod-identity \
     aad-pod-identity/aad-pod-identity \
     -n aad-pod-identity \
+    --set rbac.createUserFacingClusterRoles=true \
     | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 curl -s https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts/aad-pod-identity/crds/crd.yaml | yq -s '"resources/crds/" + .metadata.name + ".yml"' -
 cd resources/render
@@ -100,20 +101,6 @@ cp -R $tempdir/externaldns/kustomize/* resources/render
 kustomize edit set image k8s.gcr.io/external-dns/external-dns:$externalDNSOperatorVersion 
 cd ../../
 echo "Upgraded external-dns to $externalDNSOperatorVersion"
-
-cd k8s/grafana
-rm -rf resources/render/
-mkdir -p resources/render
-helm template grafana \
-   grafana/grafana \
-    -n grafana \
-    --set testFramework.enabled=false	\
-    --set ingress.enabled=true	\
-    | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-cd resources/render
-kustomize create app --recursive --autodetect
-cd ../../../..
-echo "Upgraded grafana"
 
 # # Cleanup
 rm -rf $tempdir
