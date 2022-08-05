@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
   - resources/render/
   - resources/dashboard-ingress.yaml
-  - resources/kaniko-azureidentity.yaml
-  - resources/kaniko-azureidentitybinding.yaml
 
 patches:
   - target:
