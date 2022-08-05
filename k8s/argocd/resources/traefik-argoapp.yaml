@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: traefik
+  annotations:
+    argocd.argoproj.io/manifest-generate-paths: k8s/traefik
 spec:
   project: default
   source:
