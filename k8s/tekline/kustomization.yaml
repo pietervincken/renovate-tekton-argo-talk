@@ -14,7 +14,7 @@ resources:
   - resources/ns.yaml
   - resources/pipelines/delegate-pipeline.yaml
   - resources/tasks/apply-tekton-task.yaml
-  - resources/tasks/create-namespace-task.yaml
+  - resources/tasks/create-namespace-task
   - resources/tasks/trigger-pipelines-task
   - secrets/github-clone-external-secret.yaml
   - secrets/github-trigger-external-secret.yaml
