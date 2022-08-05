@@ -102,8 +102,8 @@ spec:
         jq -s '.[].secrets = ([.[].secrets]|flatten) | .[0]' ${sa} ${secrets} > ${newsa}
         kubectl apply -f ${newsa}
 
-        kubectl apply -f /scripts
-
+        # add managed identity
+        kubectl apply -f /scripts --namespace=${namespace}
 
         echo ${namespace} | tee $(results.namespace.path)
 
