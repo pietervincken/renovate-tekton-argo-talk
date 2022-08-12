@@ -20,7 +20,7 @@ spec:
         set -euxo pipefail
 
         namespace=$(params.namespace)
-        for pipeline in $(kubectl get pipeline -l tekline.pietervincken.com/skip!=true -o=name -n ${namespace} | sed 's/.*\///')
+        for pipeline in $(kubectl get pipeline -l tekline.pietervincken.com/skip!=true -o=name -n ${namespace})
         do {
 
           echo "Evaluating: $pipeline"
