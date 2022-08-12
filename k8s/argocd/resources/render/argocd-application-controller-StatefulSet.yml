@@ -141,7 +141,7 @@ spec:
                   key: otlp.address
                   name: argocd-cmd-params-cm
                   optional: true
-          image: quay.io/argoproj/argocd:v2.4.8
+          image: quay.io/argoproj/argocd:v2.4.9
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
