@@ -41,7 +41,9 @@ spec:
               continue
           fi
 
-          tkn pipeline start ${pipeline}                                  \
+          base_pipeline=$(basename ${pipeline})
+
+          tkn pipeline start ${base_pipeline}                                  \
                     --pod-template /scripts/pod-template.yaml                             \
                     -w name=workspace,volumeClaimTemplateFile=/scripts/pvc-template.yaml  \
                     -p git-url=$(params.git-url)                          \
