@@ -39,8 +39,8 @@ export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 
 ## TODO
 
-- Setup repositories for Demo applications. 
 - (Optional) Create ACR and push all images to ACR before demo.
-- Create "real" pipeline
+- WIP: Create "real" pipeline
 - Split into multiple application repositories
 - (Optional) Deploy Prometheus/Thanos
+- Setup label based filtering for Tekton triggering. 

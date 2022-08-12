@@ -4,17 +4,14 @@ metadata:
   name: trigger-pipelines
 spec:
   params:
-    - name: TEKLINE_IMAGE
-      default: docker.io/joyrex2001/tekline:latest
     - name: namespace
     - name: git-url
     - name: git-revision
     - name: git-repository-name
     - name: git-push-user-email
-
   steps:
     - name: trigger-pipelineruns
-      image: "$(params.TEKLINE_IMAGE)"
+      image: docker.io/joyrex2001/tekline:latest
       volumeMounts:
         - name: scripts
           mountPath: /scripts
@@ -23,8 +20,27 @@ spec:
         set -euxo pipefail
 
         namespace=$(params.namespace)
-        for pipeline in $(tkn pipeline ls -o=name -n ${namespace} | sed 's/.*\///')
+        for pipeline in $(tkn pipeline ls -l tekline.pietervincken.com/skip!=true -o=name -n ${namespace} | sed 's/.*\///')
         do {
+
+          echo "Evaluating: $pipeline"
+          kubectl get ${pipeline} -n ${namespace} -o json > /tmp/pipeline-json
+
+          regex_match=$(cat /tmp/pipeline-json | jq --raw-output '.metadata.annotations["tekline.pietervincken.com/run-regex"]')
+          regex_skip=$(cat /tmp/pipeline-json | jq --raw-output '.metadata.annotations["tekline.pietervincken.com/skip-regex"]')
+
+          if [[ $regex_skip != "null" ]] && echo $revision | grep -qE "$regex_skip" 
+          then
+              echo "Skipping pipeline $pipeline due to matched skip regex: $regex_skip"
+              continue
+          fi
+
+          if [[ $regex_match != "null" ]] && echo $revision | (! grep -qE "$regex_match")
+          then
+              echo "Skipping pipeline $pipeline due to missing match to run regex: $regex_match"
+              continue
+          fi
+
           tkn pipeline start ${pipeline}                                  \
                     --pod-template /scripts/pod-template.yaml                             \
                     -w name=workspace,volumeClaimTemplateFile=/scripts/pvc-template.yaml  \
