@@ -20,7 +20,7 @@ spec:
           mountPath: /scripts
       script: |
         #!/bin/bash
-        set -euxo pipefail
+        set -euo pipefail
 
         function get_namespace() {
             local reponame=$1
