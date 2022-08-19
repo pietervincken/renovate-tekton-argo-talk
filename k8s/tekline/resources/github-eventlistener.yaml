@@ -16,6 +16,8 @@ spec:
                 secretKey: secretToken
             - name: "eventTypes"
               value: ["push"]
+            - name: filter
+              value: "! '[skip ci]' in body.head_commit.message"
             - name: "overlays"
               value:
                 - key: sanitized_gitref
