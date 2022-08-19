@@ -17,7 +17,7 @@ spec:
       containers:
         - command:
             - argocd-notifications
-          image: quay.io/argoproj/argocd:v2.4.9
+          image: quay.io/argoproj/argocd:v2.4.10
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
