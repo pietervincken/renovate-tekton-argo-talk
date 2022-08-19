@@ -17,7 +17,7 @@ spec:
             - name: "eventTypes"
               value: ["push"]
             - name: filter
-              value: "body.head_commit.message == r'[skip ci]'"
+              value: "body.head_commit.message != r'[skip ci]'"
             - name: "overlays"
               value:
                 - key: sanitized_gitref
