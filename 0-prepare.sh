@@ -31,3 +31,5 @@ echo "resource_group_name  = \"$rgstate\""          >> terraform/config.azurerm.
 echo "storage_account_name = \"$sastate\""          >> terraform/config.azurerm.tfbackend
 echo 'container_name       = "tfstate"'             >> terraform/config.azurerm.tfbackend
 echo 'key                  = "terraform.tfstate"'   >> terraform/config.azurerm.tfbackend
+
+echo "UPDATE PAT IF NEEDED!!!"
