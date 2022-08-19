@@ -1,6 +1,6 @@
 # Tekline
 
-Filtering of tasks can be done through usage of the following labels and annotations. 
+Filtering of tasks can be done through usage of the following labels and annotations.
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -17,3 +17,6 @@ Filtering of tasks can be done through usage of the following labels and annotat
 | Not present | No match  | Run |
 | No match  | *  | Skip |
 | *  | Match | Skip |
+
+Next to the label based skipping, commit based skipping is also supported based on the `[skip ci]` match.
+If `[skip ci]` is found in the commit message, no pipeline is triggered (not even the delegate).
