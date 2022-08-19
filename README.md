@@ -44,3 +44,5 @@ export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 - Split into multiple application repositories
 - (Optional) Deploy Prometheus/Thanos
 - Setup label based filtering for Tekton triggering. 
+
+- Add NodeJS app as demo app. 
