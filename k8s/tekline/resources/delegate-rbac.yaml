@@ -33,6 +33,7 @@ rules:
       - "get"
       - "create"
       - "update"
+      - "patch"
   - apiGroups:
       - "rbac.authorization.k8s.io"
     resources:
