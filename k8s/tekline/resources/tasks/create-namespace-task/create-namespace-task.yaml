@@ -105,6 +105,8 @@ spec:
         # add managed identity
         kubectl apply -f /scripts --namespace=${namespace}
 
+        kubectl label namespace ${namespace} tekline.joyrex2001.com/namespace="true"
+
         echo ${namespace} | tee $(results.namespace.path)
 
   volumes:
