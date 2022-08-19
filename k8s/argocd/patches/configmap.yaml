@@ -6,11 +6,6 @@
           - tekton.dev
         kinds:
           - PipelineRun
-        clusters:
-          - https://kubernetes.default.svc
-      - apiGroups:
-          - tekton.dev
-        kinds:
           - TaskRun
         clusters:
-          - https://kubernetes.default.svc
+          - "*"
