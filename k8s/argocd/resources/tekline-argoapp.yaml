@@ -15,5 +15,5 @@ spec:
     namespace: tekline
   syncPolicy:
     automated:
-      prune: false # otherwise Tekline PR, TRs and pods will be automatically pruned.
+      prune: true
       selfHeal: true
