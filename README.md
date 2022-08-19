@@ -39,10 +39,8 @@ export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 
 ## TODO
 
-- (Optional) Create ACR and push all images to ACR before demo.
-- WIP: Create "real" pipeline
 - Split into multiple application repositories
 - (Optional) Deploy Prometheus/Thanos
-- Setup label based filtering for Tekton triggering. 
 
 - Add NodeJS app as demo app. 
+- Setup SSH key for Tekline remote pipeline tasks
