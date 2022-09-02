@@ -1,7 +1,7 @@
 {
     "repositories": [
         "pietervincken/renovate-talk-demo-app",
-        "pietervincken/renovate-talk-demo-java-app"
+        "pietervincken/renovate-talk-java-demo-app"
     ],
     "platform": "github"
 }
