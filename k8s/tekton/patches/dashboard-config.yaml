@@ -9,4 +9,4 @@
 
 - op: add
   path: /spec/pruner/keep
-  value: "10"
+  value: 10
