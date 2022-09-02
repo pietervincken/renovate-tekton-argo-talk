@@ -4,5 +4,9 @@
     readonly: true
 
 - op: add
-  path: /spec/pruner
-  value: null
+  path: /spec/pruner/schedule
+  value: "*/5 * * * *"
+
+- op: add
+  path: /spec/pruner/keep
+  value: "10"
