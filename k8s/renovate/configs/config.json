@@ -1,8 +1,5 @@
 {
     "repositories": [
-        // "pietervincken/renovate-talk-demo-app",
-        // "pietervincken/renovate-tekton-argo-talk",
-        // "pietervincken/renovate-talk-microservice-demo",
         "pietervincken/renovate-talk-demo-java-app"
     ],
     "platform": "github"
