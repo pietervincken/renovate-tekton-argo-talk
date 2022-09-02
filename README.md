@@ -8,7 +8,7 @@ The setup is **NOT** production ready.
 
 ### Setup Github PAT
 
-Generate a PAT as described [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and [here](https://docs.renovatebot.com/modules/platform/github/). 
+Generate a PAT as described [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and [here](https://docs.renovatebot.com/modules/platform/github/).
 
 ### Setup DNS zone NS records for subdomain
 
