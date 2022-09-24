@@ -50,7 +50,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
-  admin_enabled       = false
+  admin_enabled       = true
 }
 
 resource "azurerm_role_assignment" "k8s_to_acr" {
@@ -136,6 +136,18 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name            = "standard"
   tenant_id           = data.azurerm_subscription.current.tenant_id
   location            = azurerm_resource_group.rg.location
+}
+
+resource "azurerm_key_vault_secret" "acr_username" {
+  name         = "acr-username"
+  value        = azurerm_container_registry.acr.admin_username
+  key_vault_id = azurerm_key_vault.keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "acr_password" {
+  name         = "acr-password"
+  value        = azurerm_container_registry.acr.admin_password
+  key_vault_id = azurerm_key_vault.keyvault.id
 }
 
 # Access for user to keyvault
