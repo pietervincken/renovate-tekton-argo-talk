@@ -13,7 +13,7 @@ resources:
   - secrets/githubcredentials-externalsecret.yaml
   - https://github.com/pietervincken/renovate-talk-microservice-demo.git//argocd?ref=main
   - https://github.com/pietervincken/renovate-talk-demo-app.git//argocd?ref=main
-  - https://github.com/pietervincken/renovate-talk-java-demo-app.git//argocd?ref=main
+  - https://github.com/pietervincken/https://github.com/pietervincken/renovate-talk-java-demo-app-deploy.git//argocd?ref=main
 namespace: argocd
 
 patches:

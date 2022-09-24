@@ -5,6 +5,6 @@ metadata:
   annotations:
     aadpodidentity.k8s.io/Behavior: namespaced
 spec:
-  clientID: 1ec1c5c5-9fe8-422f-b8e6-b0d3cc6559bb
+  clientID: abeaf31c-5a50-4d79-8004-7dcf1c46d75e
   resourceID: /subscriptions/467811c4-023c-4b77-8511-54b5b2eac549/resourceGroups/rg-renovate-talk/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kaniko
   type: 0
