@@ -39,8 +39,5 @@ export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 
 ## TODO
 
-- Split into multiple application repositories
 - (Optional) Deploy Prometheus/Thanos
-
-- Add NodeJS app as demo app. 
-- Setup SSH key for Tekline remote pipeline tasks
+- (Optional) Setup SSH key for Tekline remote pipeline tasks
