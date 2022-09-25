@@ -142,12 +142,15 @@ resource "azurerm_key_vault_secret" "acr_username" {
   name         = "acr-username"
   value        = azurerm_container_registry.acr.admin_username
   key_vault_id = azurerm_key_vault.keyvault.id
+
+  depends_on =[azurerm_key_vault_access_policy.admin_access]
 }
 
 resource "azurerm_key_vault_secret" "acr_password" {
   name         = "acr-password"
   value        = azurerm_container_registry.acr.admin_password
   key_vault_id = azurerm_key_vault.keyvault.id
+  depends_on =[azurerm_key_vault_access_policy.admin_access]
 }
 
 # Access for user to keyvault
