@@ -4,7 +4,16 @@ Disclaimer: this repository is for demo purposes only.
 The setup is **NOT** production ready. 
 **USE AT YOUR OWN RISK.**
 
-## Manual actions required
+## Links
+
+- [Companion slides](https://www.slideshare.net/PieterVincken/join-2022-patching-3rd-party-software-like-a-boss)
+- [JOIN 2022 recording](TBD)
+- [Demo walkthrough](docs/demo-walkthrough.md)
+- [Demo video](https://youtu.be/qWrL1kOWP4k)
+- [Demo application repository](https://github.com/pietervincken/renovate-talk-java-demo-app)
+- [Demo application deployment repository](https://github.com/pietervincken/renovate-talk-java-demo-app-deploy)
+
+## Manual actions required for running demo
 
 ### Setup Github PAT
 
@@ -34,7 +43,7 @@ export tenant="" # add your tenant id here. Required for setting up rights to k8
 export ARM_TENANT_ID=$tenant # needed in both formats
 export githubpat="ghp_xxx" # GitHub PAT token. Needs write access to read and update your github repos.
 export githubmail="xxx" # public email of github account. (github email, not private email). Used for SSH key generation
-export githubtrigger="xxx" # Token used to validate push webhooks from Github. 
+export githubtrigger="xxx" # Token used to validate push webhooks from Github.
 ```
 
 ## TODO
