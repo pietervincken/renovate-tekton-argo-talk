@@ -1,7 +1,7 @@
 ---
 apiVersion: v1
 data:
-  version: v0.60.1
+  version: v0.62.0
 kind: ConfigMap
 metadata:
   labels:

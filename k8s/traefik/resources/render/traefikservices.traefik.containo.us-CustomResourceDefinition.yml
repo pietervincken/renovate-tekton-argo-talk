@@ -18,7 +18,7 @@ spec:
     - name: v1alpha1
       schema:
         openAPIV3Schema:
-          description: 'TraefikService is the CRD implementation of a Traefik Service. TraefikService object allows to: - Apply weight to Services on load-balancing - Mirror traffic on services More info: https://doc.traefik.io/traefik/v2.8/routing/providers/kubernetes-crd/#kind-traefikservice'
+          description: 'TraefikService is the CRD implementation of a Traefik Service. TraefikService object allows to: - Apply weight to Services on load-balancing - Mirror traffic on services More info: https://doc.traefik.io/traefik/v2.9/routing/providers/kubernetes-crd/#kind-traefikservice'
           properties:
             apiVersion:
               description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -87,7 +87,7 @@ spec:
                             description: ServersTransport defines the name of ServersTransport resource to use. It allows to configure the transport between Traefik and your servers. Can only be used on a Kubernetes Service.
                             type: string
                           sticky:
-                            description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.8/routing/services/#sticky-sessions'
+                            description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.9/routing/services/#sticky-sessions'
                             properties:
                               cookie:
                                 description: Cookie defines the sticky cookie configuration.
@@ -145,7 +145,7 @@ spec:
                       description: ServersTransport defines the name of ServersTransport resource to use. It allows to configure the transport between Traefik and your servers. Can only be used on a Kubernetes Service.
                       type: string
                     sticky:
-                      description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.8/routing/services/#sticky-sessions'
+                      description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.9/routing/services/#sticky-sessions'
                       properties:
                         cookie:
                           description: Cookie defines the sticky cookie configuration.
@@ -216,7 +216,7 @@ spec:
                             description: ServersTransport defines the name of ServersTransport resource to use. It allows to configure the transport between Traefik and your servers. Can only be used on a Kubernetes Service.
                             type: string
                           sticky:
-                            description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.8/routing/services/#sticky-sessions'
+                            description: 'Sticky defines the sticky sessions configuration. More info: https://doc.traefik.io/traefik/v2.9/routing/services/#sticky-sessions'
                             properties:
                               cookie:
                                 description: Cookie defines the sticky cookie configuration.
@@ -246,7 +246,7 @@ spec:
                         type: object
                       type: array
                     sticky:
-                      description: 'Sticky defines whether sticky sessions are enabled. More info: https://doc.traefik.io/traefik/v2.8/routing/providers/kubernetes-crd/#stickiness-and-load-balancing'
+                      description: 'Sticky defines whether sticky sessions are enabled. More info: https://doc.traefik.io/traefik/v2.9/routing/providers/kubernetes-crd/#stickiness-and-load-balancing'
                       properties:
                         cookie:
                           description: Cookie defines the sticky cookie configuration.

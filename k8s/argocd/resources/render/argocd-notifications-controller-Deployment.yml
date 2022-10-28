@@ -17,7 +17,7 @@ spec:
       containers:
         - command:
             - argocd-notifications
-          image: quay.io/argoproj/argocd:v2.4.10
+          image: quay.io/argoproj/argocd:v2.5.0
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -37,6 +37,8 @@ spec:
           workingDir: /app
       securityContext:
         runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: argocd-notifications-controller
       volumes:
         - configMap:

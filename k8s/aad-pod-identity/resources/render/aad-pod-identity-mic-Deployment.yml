@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: aad-pod-identity
     app.kubernetes.io/instance: aad-pod-identity
     app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: aad-pod-identity-4.1.12
+    helm.sh/chart: aad-pod-identity-4.1.13
     app.kubernetes.io/component: mic
   annotations:
     description: Deploy components for aad-pod-identity
@@ -26,7 +26,7 @@ spec:
         app.kubernetes.io/name: aad-pod-identity
         app.kubernetes.io/instance: aad-pod-identity
         app.kubernetes.io/managed-by: Helm
-        helm.sh/chart: aad-pod-identity-4.1.12
+        helm.sh/chart: aad-pod-identity-4.1.13
         app.kubernetes.io/component: mic
       annotations:
         checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
@@ -34,7 +34,7 @@ spec:
       serviceAccountName: aad-pod-identity-mic
       containers:
         - name: mic
-          image: "mcr.microsoft.com/oss/azure/aad-pod-identity/mic:v1.8.11"
+          image: "mcr.microsoft.com/oss/azure/aad-pod-identity/mic:v1.8.12"
           imagePullPolicy: IfNotPresent
           args:
             - "--cloudconfig=/etc/kubernetes/azure.json"

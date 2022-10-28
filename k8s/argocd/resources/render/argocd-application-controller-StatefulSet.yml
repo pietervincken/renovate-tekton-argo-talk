@@ -111,6 +111,12 @@ spec:
                   key: controller.repo.server.strict.tls
                   name: argocd-cmd-params-cm
                   optional: true
+            - name: ARGOCD_APPLICATION_CONTROLLER_PERSIST_RESOURCE_HEALTH
+              valueFrom:
+                configMapKeyRef:
+                  key: controller.resource.health.persist
+                  name: argocd-cmd-params-cm
+                  optional: true
             - name: ARGOCD_APP_STATE_CACHE_EXPIRATION
               valueFrom:
                 configMapKeyRef:
@@ -121,6 +127,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: redis.server
+                  name: argocd-cmd-params-cm
+                  optional: true
+            - name: REDIS_COMPRESSION
+              valueFrom:
+                configMapKeyRef:
+                  key: redis.compression
                   name: argocd-cmd-params-cm
                   optional: true
             - name: REDISDB
@@ -141,14 +153,14 @@ spec:
                   key: otlp.address
                   name: argocd-cmd-params-cm
                   optional: true
-          image: quay.io/argoproj/argocd:v2.4.10
+            - name: ARGOCD_APPLICATION_NAMESPACES
+              valueFrom:
+                configMapKeyRef:
+                  key: application.namespaces
+                  name: argocd-cmd-params-cm
+                  optional: true
+          image: quay.io/argoproj/argocd:v2.5.0
           imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8082
-            initialDelaySeconds: 5
-            periodSeconds: 10
           name: argocd-application-controller
           ports:
             - containerPort: 8082
@@ -162,9 +174,11 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - all
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - mountPath: /app/config/controller/tls
               name: argocd-repo-server-tls
