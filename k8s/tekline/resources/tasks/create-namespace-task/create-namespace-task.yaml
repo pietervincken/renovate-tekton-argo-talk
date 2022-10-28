@@ -64,6 +64,8 @@ spec:
                     --serviceaccount=${namespace}:tekline \
                     --namespace=${namespace}
 
+        echo "syncing secrets"
+
         for secret in $(kubectl get secret -o name -n tekline -l tekline.joyrex2001.com/sync-to-delegate=true)
         do {
             copy=$(kubectl get ${secret} -n tekline -o json | jq --raw-output '{
@@ -79,10 +81,14 @@ spec:
             echo $copy | kubectl apply -f - -n ${namespace}
         } done
 
+        echo "Secrets synced"
+
         ## we'll store our temporary files here
         sa=/tmp/sa-$$.json
         secrets=/tmp/secrets-$$.json
         newsa=/tmp/secret-$$.json
+
+        echo "Clean service account"
 
         ## get service account, and remove all secrets except the token
         kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '{
@@ -92,18 +98,26 @@ spec:
             secrets: .secrets[] | select(.name|test("^tekline"))
         }' > ${sa}
 
+        echo "Create list of secrets"
+
         ## create a json with an array called secrets for all secrets that are
         ## copied over to the namespace, to be added to the service account
         kubectl get secret -n tekline -l tekline.joyrex2001.com/sync-to-delegate=true -o json | jq --raw-output '{
             secrets: [ .items | { name: .[].metadata.name } ]
         }' > ${secrets}
 
+        echo "Add secrets to service account"
+
         ## merge the two json files, combining the arrays of secrets
         jq -s '.[].secrets = ([.[].secrets]|flatten) | .[0]' ${sa} ${secrets} > ${newsa}
         kubectl apply -f ${newsa}
 
+        echo "Add managed identity"
+
         # add managed identity
         kubectl apply -f /scripts --namespace=${namespace}
+
+        echo "Label target namespace"
 
         kubectl label namespace ${namespace} --overwrite tekline.joyrex2001.com/namespace="true" 
 
