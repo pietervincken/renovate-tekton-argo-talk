@@ -91,12 +91,15 @@ spec:
         echo "Clean service account"
 
         ## get service account, and remove all secrets except the token
-        kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '{
+        secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | map(.name|test("^tekline"))')
+
+        ## get service account, and remove all secrets except the token
+        kubectl get sa tekline -n ${namespace} -o json | jq --raw-output "{
             apiVersion: .apiVersion, 
             kind: .kind, 
             metadata: .metadata, 
-            secrets: select(.secrets != null) | .secrets[] | select(.name|test("^tekline"))
-        }' > ${sa}
+            secrets: $secretlist
+        }" > ${sa}
 
         echo "Create list of secrets"
 
