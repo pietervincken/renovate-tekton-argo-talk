@@ -71,7 +71,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = local.name
-  kubernetes_version  = "1.23.5"
+  kubernetes_version  = "1.24.6"
 
 
   default_node_pool {
@@ -143,14 +143,14 @@ resource "azurerm_key_vault_secret" "acr_username" {
   value        = azurerm_container_registry.acr.admin_username
   key_vault_id = azurerm_key_vault.keyvault.id
 
-  depends_on =[azurerm_key_vault_access_policy.admin_access]
+  depends_on = [azurerm_key_vault_access_policy.admin_access]
 }
 
 resource "azurerm_key_vault_secret" "acr_password" {
   name         = "acr-password"
   value        = azurerm_container_registry.acr.admin_password
   key_vault_id = azurerm_key_vault.keyvault.id
-  depends_on =[azurerm_key_vault_access_policy.admin_access]
+  depends_on   = [azurerm_key_vault_access_policy.admin_access]
 }
 
 # Access for user to keyvault
