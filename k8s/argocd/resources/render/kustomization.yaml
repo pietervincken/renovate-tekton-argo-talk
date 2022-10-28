@@ -16,6 +16,7 @@ resources:
 - argocd-applicationset-controller-RoleBinding.yml
 - argocd-applicationset-controller-Service.yml
 - argocd-applicationset-controller-ServiceAccount.yml
+- argocd-applicationset-controller-network-policy-NetworkPolicy.yml
 - argocd-cm-ConfigMap.yml
 - argocd-cmd-params-cm-ConfigMap.yml
 - argocd-dex-server-Deployment.yml
@@ -32,6 +33,7 @@ resources:
 - argocd-notifications-controller-RoleBinding.yml
 - argocd-notifications-controller-ServiceAccount.yml
 - argocd-notifications-controller-metrics-Service.yml
+- argocd-notifications-controller-network-policy-NetworkPolicy.yml
 - argocd-notifications-secret-Secret.yml
 - argocd-rbac-cm-ConfigMap.yml
 - argocd-redis-Deployment.yml

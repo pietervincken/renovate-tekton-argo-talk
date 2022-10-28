@@ -37,7 +37,7 @@ spec:
             - ""
             - --appendonly
             - "no"
-          image: redis:7.0.4-alpine
+          image: redis:7.0.5-alpine
           imagePullPolicy: Always
           name: redis
           ports:
@@ -46,8 +46,10 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - all
+                - ALL
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: argocd-redis

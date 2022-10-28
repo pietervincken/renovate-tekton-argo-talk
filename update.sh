@@ -85,8 +85,8 @@ helm template traefik traefik/traefik \
   --set globalArguments= \
   --set providers.kubernetesIngress.publishedService.enabled=true \
   | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-curl -sL https://raw.githubusercontent.com/traefik/traefik/v2.8/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-curl -sL https://raw.githubusercontent.com/traefik/traefik/v2.8/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 cd resources/render/
 kustomize create app --recursive --autodetect
 cd ../../../..

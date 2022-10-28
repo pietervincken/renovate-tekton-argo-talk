@@ -29,7 +29,14 @@ spec:
         - command:
             - /shared/argocd-dex
             - rundex
-          image: ghcr.io/dexidp/dex:v2.32.0
+          env:
+            - name: ARGOCD_DEX_SERVER_DISABLE_TLS
+              valueFrom:
+                configMapKeyRef:
+                  key: dexserver.disable.tls
+                  name: argocd-cmd-params-cm
+                  optional: true
+          image: ghcr.io/dexidp/dex:v2.35.3-distroless
           imagePullPolicy: Always
           name: dex
           ports:
@@ -43,18 +50,22 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - mountPath: /shared
               name: static-files
             - mountPath: /tmp
               name: dexconfig
+            - mountPath: /tls
+              name: argocd-dex-server-tls
       initContainers:
         - command:
             - cp
             - -n
             - /usr/local/bin/argocd
             - /shared/argocd-dex
-          image: quay.io/argoproj/argocd:v2.4.10
+          image: quay.io/argoproj/argocd:v2.5.0
           imagePullPolicy: Always
           name: copyutil
           securityContext:
@@ -64,6 +75,8 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - mountPath: /shared
               name: static-files
@@ -75,3 +88,14 @@ spec:
           name: static-files
         - emptyDir: {}
           name: dexconfig
+        - name: argocd-dex-server-tls
+          secret:
+            items:
+              - key: tls.crt
+                path: tls.crt
+              - key: tls.key
+                path: tls.key
+              - key: ca.crt
+                path: ca.crt
+            optional: true
+            secretName: argocd-dex-server-tls
