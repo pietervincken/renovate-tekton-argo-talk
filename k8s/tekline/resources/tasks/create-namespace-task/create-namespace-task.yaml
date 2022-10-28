@@ -95,7 +95,7 @@ spec:
             apiVersion: .apiVersion, 
             kind: .kind, 
             metadata: .metadata, 
-            secrets: .secrets[] | select(.name|test("^tekline"))
+            secrets: select(.secrets != null) | .secrets[] | select(.name|test("^tekline"))
         }' > ${sa}
 
         echo "Create list of secrets"
