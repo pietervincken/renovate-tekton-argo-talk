@@ -90,10 +90,10 @@ spec:
 
         echo "Clean service account"
 
-        ## get service account, and remove all secrets except the token
+        ## get existing list of secrets in service account excluding any tekton secrets
         secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | map(.name|test("^tekline"))')
 
-        ## get service account, and remove all secrets except the token
+        ## Get service account and add filtered secrets list into it
         kubectl get sa tekline -n ${namespace} -o json | jq --raw-output "{
             apiVersion: .apiVersion, 
             kind: .kind, 
