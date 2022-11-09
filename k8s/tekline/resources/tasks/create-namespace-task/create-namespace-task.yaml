@@ -91,7 +91,8 @@ spec:
         echo "Clean service account"
 
         ## get existing list of secrets in service account excluding any tekton secrets
-        secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | map(.name|test("^tekline"))')
+        # secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | map(.name|test("^tekline"))')
+        secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | .[].name)
 
         ## Get service account and add filtered secrets list into it
         kubectl get sa tekline -n ${namespace} -o json | jq --raw-output "{
