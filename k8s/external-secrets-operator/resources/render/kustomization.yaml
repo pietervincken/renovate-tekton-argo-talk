@@ -1,8 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- acraccesstokens.generators.external-secrets.io-CustomResourceDefinition.yml
 - clusterexternalsecrets.external-secrets.io-CustomResourceDefinition.yml
 - clustersecretstores.external-secrets.io-CustomResourceDefinition.yml
+- ecrauthorizationtokens.generators.external-secrets.io-CustomResourceDefinition.yml
 - external-secrets-Deployment.yml
 - external-secrets-ServiceAccount.yml
 - external-secrets-cert-controller-ClusterRole.yml
@@ -21,5 +23,9 @@ resources:
 - external-secrets-webhook-ServiceAccount.yml
 - externalsecret-validate-ValidatingWebhookConfiguration.yml
 - externalsecrets.external-secrets.io-CustomResourceDefinition.yml
+- fakes.generators.external-secrets.io-CustomResourceDefinition.yml
+- gcraccesstokens.generators.external-secrets.io-CustomResourceDefinition.yml
+- passwords.generators.external-secrets.io-CustomResourceDefinition.yml
+- pushsecrets.external-secrets.io-CustomResourceDefinition.yml
 - secretstore-validate-ValidatingWebhookConfiguration.yml
 - secretstores.external-secrets.io-CustomResourceDefinition.yml

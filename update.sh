@@ -13,8 +13,7 @@ get_latest_release() {
 # helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
 # helm repo add traefik https://helm.traefik.io/traefik
 # helm repo add external-secrets https://charts.external-secrets.io
-# helm repo add grafana https://grafana.github.io/helm-charts
-# helm repo update
+helm repo update
 
 cd k8s/aad-pod-identity
 rm -rf resources/render resources/crds

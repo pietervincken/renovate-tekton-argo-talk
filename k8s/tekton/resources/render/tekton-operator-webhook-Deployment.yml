@@ -3,8 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    operator.tekton.dev/release: v0.62.0
-    version: v0.62.0
+    operator.tekton.dev/release: v0.64.0
+    version: v0.64.0
   name: tekton-operator-webhook
   namespace: tekton-operator
 spec:
@@ -32,7 +32,7 @@ spec:
               value: tekton-operator-webhook-certs
             - name: METRICS_DOMAIN
               value: tekton.dev/operator
-          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.62.0@sha256:af242fc4ca25235e64db10fb478031cb55d882cc1f783d4a5392d048605e5b35
+          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.64.0@sha256:1e1e906573059f9509982f3af876aecbf5489862fcbcef1c853e3ae609f21ece
           name: tekton-operator-webhook
           ports:
             - containerPort: 8443
