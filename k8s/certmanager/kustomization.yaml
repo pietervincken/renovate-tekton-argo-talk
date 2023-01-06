@@ -6,3 +6,14 @@ resources:
   - resources/staging-clusterissuer.yaml
 
 namespace: cert-manager
+
+patches:
+  - target:
+      kind: Deployment
+      name: cert-manager
+    path: patches/deployment-leader-election-namespace.yaml
+
+  - target:
+      kind: Deployment
+      name: cert-manager-cainjector
+    path: patches/cainjector-deployment-leader-election-namespace.yaml
