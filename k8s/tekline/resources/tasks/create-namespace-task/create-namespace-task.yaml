@@ -95,7 +95,7 @@ spec:
         ## If tekline SA mounts secrets (pre k8s 1.23) make sure filtering is enabled. 
         ## secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | select(.name|test("^tekline"))')
         
-        secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | [.[].name])
+        secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | [.[].name]')
 
         ## Get service account and add filtered secrets list into it
         kubectl get sa tekline -n ${namespace} -o json | jq --raw-output "{
