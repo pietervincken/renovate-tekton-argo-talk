@@ -58,6 +58,12 @@ spec:
         kubectl get namespace ${namespace} || kubectl create namespace ${namespace}
         kubectl get sa tekline -n ${namespace} || kubectl apply -n ${namespace} -f scripts/sa.yaml
 
+        # Apply additional resources if required. 
+        if [ -n "$(ls -A resources/ 2>/dev/null)" ]
+        then
+          kubectl apply -n ${namespace} -f resources/*
+        fi
+
         kubectl get rolebinding -n ${namespace} tekline-edit || \
           kubectl create rolebinding tekline-edit         \
                     --clusterrole=edit                    \
@@ -128,3 +134,6 @@ spec:
     - name: scripts
       configMap:
         name: create-namespace-scripts
+    - name: resources
+      configMap:
+        name: create-namespace-resources

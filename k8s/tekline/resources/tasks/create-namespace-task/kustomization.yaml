@@ -7,3 +7,4 @@ configMapGenerator:
   - name: create-namespace-scripts
     files:
       - sa.yaml
+  - name: create-namespace-resources
