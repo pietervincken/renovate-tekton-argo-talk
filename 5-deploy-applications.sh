@@ -18,3 +18,5 @@ kubectl apply -k k8s/external-secrets-operator
 
 kubectl apply -k k8s/argocd # first attempt will fail due to missing crds
 kubectl apply -k k8s/argocd
+
+kubectl apply -k k8s/argocdapps

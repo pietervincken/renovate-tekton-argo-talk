@@ -6,10 +6,11 @@ resources:
   - resources/stripprefix-middleware.yaml
 
 patches:
-  - target:
-      kind: Service
-      name: traefik
-    path: patches/service.yaml
+  # maybe not needed?
+  # - target:
+  #     kind: Service
+  #     name: traefik
+  #   path: patches/service.yaml
 
   - target:
       group: rbac.authorization.k8s.io
