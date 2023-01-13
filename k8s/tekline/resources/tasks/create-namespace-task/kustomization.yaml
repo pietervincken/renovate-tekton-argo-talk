@@ -6,5 +6,4 @@ resources:
 configMapGenerator:
   - name: create-namespace-scripts
     files:
-      - kaniko-azureidentity.yaml
-      - kaniko-azureidentitybinding.yaml
+      - sa.yaml

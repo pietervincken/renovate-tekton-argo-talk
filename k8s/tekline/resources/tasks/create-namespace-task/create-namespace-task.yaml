@@ -56,7 +56,7 @@ spec:
         done
 
         kubectl get namespace ${namespace} || kubectl create namespace ${namespace}
-        kubectl get sa tekline -n ${namespace} || kubectl create sa -n ${namespace} tekline
+        kubectl get sa tekline -n ${namespace} || kubectl apply -n ${namespace} -f scripts/sa.yaml
 
         kubectl get rolebinding -n ${namespace} tekline-edit || \
           kubectl create rolebinding tekline-edit         \
@@ -91,10 +91,10 @@ spec:
         echo "Clean service account"
 
         ## get existing list of secrets in service account excluding any tekton secrets
-        
+
         ## If tekline SA mounts secrets (pre k8s 1.23) make sure filtering is enabled. 
         ## secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | select(.name|test("^tekline"))')
-        
+
         secretlist=$(kubectl get sa tekline -n ${namespace} -o json | jq --raw-output '.secrets // [] | [.[].name]')
 
         ## Get service account and add filtered secrets list into it
