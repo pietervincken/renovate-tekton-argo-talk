@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - resources/cronjob.yaml
   - resources/ns.yaml
+  - resources/sa.yaml
   - secrets/renovate-external-secret.yaml
 
 configMapGenerator:
