@@ -63,7 +63,7 @@ spec:
         # Apply additional resources if required. 
         if [ -n "$(ls -A /resources/ 2>/dev/null)" ]
         then
-          kubectl apply -n ${namespace} -f /resources/*
+          kubectl apply -n ${namespace} -f /resources
         fi
 
         kubectl get rolebinding -n ${namespace} tekline-edit || \
