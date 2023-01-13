@@ -69,8 +69,8 @@ spec:
         for secret in $(kubectl get secret -o name -n tekline -l tekline.joyrex2001.com/sync-to-delegate=true)
         do {
             copy=$(kubectl get ${secret} -n tekline -o json | jq --raw-output '{
-                apiVersion: .apiVersion, 
-                kind: .kind, 
+                apiVersion: .apiVersion,
+                kind: .kind,
                 metadata: { 
                     name: .metadata.name, 
                     annotations: .metadata.annotations | with_entries(select(.key|test("^tekton")))
@@ -119,15 +119,9 @@ spec:
         jq -s '.[].secrets = ([.[].secrets]|flatten) | .[0]' ${sa} ${secrets} > ${newsa}
         kubectl apply -f ${newsa}
 
-        echo "Add managed identity"
-
-        # add managed identity
-        kubectl apply -f /scripts --namespace=${namespace}
-
         echo "Label target namespace"
-
         kubectl label namespace ${namespace} --overwrite tekline.joyrex2001.com/namespace="true" 
-
+        
         echo ${namespace} | tee $(results.namespace.path)
 
   volumes:
