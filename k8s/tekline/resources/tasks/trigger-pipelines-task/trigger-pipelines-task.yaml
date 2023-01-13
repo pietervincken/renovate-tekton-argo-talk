@@ -9,6 +9,7 @@ spec:
     - name: git-revision
     - name: git-repository-name
     - name: git-push-user-email
+    - name: registry
   steps:
     - name: trigger-pipelineruns
       image: docker.io/joyrex2001/tekline:latest
@@ -50,6 +51,7 @@ spec:
                     -p git-revision=$(params.git-revision)                \
                     -p git-repository-name=$(params.git-repository-name)  \
                     -p git-push-user-email=$(params.git-push-user-email)  \
+                    -p registry=$(params.registry)  \
                     -s tekline                                            \
                     -n $(params.namespace)
         } done

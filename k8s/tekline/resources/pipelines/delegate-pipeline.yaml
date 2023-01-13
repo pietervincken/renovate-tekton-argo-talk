@@ -10,7 +10,7 @@ spec:
     - name: git-revision
     - name: git-repository-name
     - name: git-push-user-email
-
+    - name: registry
   tasks:
     - name: create-namespace
       taskRef:
@@ -52,3 +52,5 @@ spec:
           value: $(params.git-repository-name)
         - name: git-push-user-email
           value: $(params.git-push-user-email)
+        - name: registry
+          value: $(params.registry)
