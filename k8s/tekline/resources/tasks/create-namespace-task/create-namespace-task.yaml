@@ -60,6 +60,7 @@ spec:
         kubectl get namespace ${namespace} || kubectl create namespace ${namespace}
         kubectl get sa tekline -n ${namespace} || kubectl apply -n ${namespace} -f scripts/sa.yaml
 
+        ls -A /resources/
         # Apply additional resources if required. 
         if [ -n "$(ls -A /resources/ 2>/dev/null)" ]
         then
