@@ -64,6 +64,8 @@ spec:
         if [ -n "$(ls -A /resources/ 2>/dev/null)" ]
         then
           kubectl apply -n ${namespace} -f /resources
+        else
+          echo "No additional resources found. Skipping"
         fi
 
         kubectl get rolebinding -n ${namespace} tekline-edit || \
