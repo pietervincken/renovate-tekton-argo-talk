@@ -17,7 +17,7 @@ spec:
               # Update this to the latest available and then enable Renovate on
               # the manifest
               # image: renovate/renovate:32.125.0
-              image: renovate/renovate:32.125.0-slim
+              image: renovate/renovate:34.121.0-slim
               # Environment Variables
               envFrom:
                 - secretRef:
