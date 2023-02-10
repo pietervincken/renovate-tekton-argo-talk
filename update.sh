@@ -102,6 +102,16 @@ cp $tempdir/kube-prometheus/manifests/kubernetes* resources/render/kubernetes/
 cp $tempdir/kube-prometheus/manifests/nodeExporter-* resources/render/node-exporter/
 cp $tempdir/kube-prometheus/manifests/alertmanager-* resources/render/alertmanager/
 
+thanosVersion=$(get_latest_release "thanos-io/thanos")
+yq -i ".[0].value.version |= \"$thanosVersion\""  patches/prometheus-thanos.yaml
+yq -i ".images[0].newTag |= \"$thanosVersion\""  kustomization.yaml
+kubeThanosVersion=$(get_latest_release "thanos-io/kube-thanos")
+
+git clone -q --depth=1 https://github.com/thanos-io/kube-thanos.git --branch $kubeThanosVersion $tempdir/kube-thanos 2> /dev/null
+mkdir -p resources/render/thanos/ || true
+cp $tempdir/kube-thanos/manifests/thanos-query* resources/render/thanos/
+cp $tempdir/kube-thanos/manifests/thanos-store* resources/render/thanos/
+
 # needed to be selective to take all namespaces easily
 cp $tempdir/kube-prometheus/manifests/prometheus-* resources/render/prometheus/
 cp $tempdir/prometheus-operator/example/rbac/prometheus/prometheus-cluster-role-binding.yaml resources/render/prometheus/prometheus-clusterRoleBinding.yaml
@@ -111,6 +121,9 @@ cd resources/render
 kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded kube-prometheus to $kubePrometheus"
+echo "Upgraded kube-thanos to $kubeThanosVersion"
+echo "Upgraded thanos to $thanosVersion"
+
 
 mkdir -p k8s/grafana-operator || true
 cd k8s/grafana-operator
@@ -141,10 +154,6 @@ cd resources/render
 kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded dashboarding"
-
-
-thanosVersion=$(get_latest_release "thanos-io/thanos")
-yq -i ".[0].value.thanos.version |= \"$thanosVersion\""  k8s/monitoring/patches/prometheus-thanos.yaml
 
 # # Cleanup
 rm -rf $tempdir

@@ -50,3 +50,11 @@ resources:
 - prometheus/prometheus-service.yaml
 - prometheus/prometheus-serviceAccount.yaml
 - prometheus/prometheus-serviceMonitor.yaml
+- thanos/thanos-query-deployment.yaml
+- thanos/thanos-query-service.yaml
+- thanos/thanos-query-serviceAccount.yaml
+- thanos/thanos-query-serviceMonitor.yaml
+- thanos/thanos-store-service.yaml
+- thanos/thanos-store-serviceAccount.yaml
+- thanos/thanos-store-serviceMonitor.yaml
+- thanos/thanos-store-statefulSet.yaml
