@@ -152,13 +152,19 @@ spec:
                   key: reposerver.streamed.manifest.max.extracted.size
                   name: argocd-cmd-params-cm
                   optional: true
+            - name: ARGOCD_GIT_MODULES_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  key: reposerver.enable.git.submodule
+                  name: argocd-cmd-params-cm
+                  optional: true
             - name: HELM_CACHE_HOME
               value: /helm-working-dir
             - name: HELM_CONFIG_HOME
               value: /helm-working-dir
             - name: HELM_DATA_HOME
               value: /helm-working-dir
-          image: quay.io/argoproj/argocd:v2.5.5
+          image: quay.io/argoproj/argocd:v2.6.1
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
@@ -166,7 +172,8 @@ spec:
               path: /healthz?full=true
               port: 8084
             initialDelaySeconds: 30
-            periodSeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 5
           name: argocd-repo-server
           ports:
             - containerPort: 8081
@@ -209,7 +216,7 @@ spec:
             - -n
             - /usr/local/bin/argocd
             - /var/run/argocd/argocd-cmp-server
-          image: quay.io/argoproj/argocd:v2.5.5
+          image: quay.io/argoproj/argocd:v2.6.1
           name: copyutil
           securityContext:
             allowPrivilegeEscalation: false

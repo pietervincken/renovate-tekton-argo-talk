@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- azureassignedidentities.aadpodidentity.k8s.io.yml
-- azureidentities.aadpodidentity.k8s.io.yml
-- azureidentitybindings.aadpodidentity.k8s.io.yml
-- azurepodidentityexceptions.aadpodidentity.k8s.io.yml

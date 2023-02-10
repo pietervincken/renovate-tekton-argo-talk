@@ -1,0 +1,110 @@
+---
+# Source: grafana-operator/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-operator
+  namespace: "grafana-operator"
+  labels:
+    app.kubernetes.io/name: grafana-operator
+    helm.sh/chart: grafana-operator-2.7.17
+    app.kubernetes.io/instance: grafana-operator
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: grafana-operator
+      app.kubernetes.io/instance: grafana-operator
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grafana-operator
+        helm.sh/chart: grafana-operator-2.7.17
+        app.kubernetes.io/instance: grafana-operator
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: grafana-operator
+                    app.kubernetes.io/instance: grafana-operator
+                    app.kubernetes.io/component: grafana-operator
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+      serviceAccountName: grafana-operator
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+        supplementalGroups: []
+      containers:
+        - name: grafana-operator
+          image: docker.io/bitnami/grafana-operator:4.8.0-debian-11-r23
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsGroup: 1001
+            runAsNonRoot: true
+            runAsUser: 1001
+          command:
+            - grafana-operator
+          args:
+            - --grafana-image=docker.io/bitnami/grafana
+            - --grafana-image-tag=9.3.6-debian-11-r1
+            - --grafana-plugins-init-container-image=docker.io/bitnami/grafana
+            - --grafana-plugins-init-container-tag=9.3.6-debian-11-r1
+            - --leader-elect=True
+          env:
+            - name: TEMPLATE_PATH
+              value: /usr/local/bin/templates
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: grafana-operator
+          envFrom:
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /healthz
+              port: 8081
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /metrics
+              port: metrics
+          startupProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /metrics
+              port: metrics

@@ -10,38 +10,10 @@ get_latest_release() {
   jq --raw-output 'map(select(.tag_name |  test("^v.*"))) | map(select(.prerelease | not)) | map(select(.tag_name | test(".*beta.*")|not)) | map(select(.tag_name | test(".*alpha.*")|not)) | map(select(.tag_name | test(".*rc.*")|not)) | first | .tag_name'  # get the tag from tag_name
 }
 
-# helm repo add aad-pod-identity https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts
 # helm repo add traefik https://helm.traefik.io/traefik
 # helm repo add external-secrets https://charts.external-secrets.io
+# helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
-
-cd k8s/aad-pod-identity
-rm -rf resources/render resources/crds
-mkdir -p resources/render resources/crds
-helm template aad-pod-identity \
-    aad-pod-identity/aad-pod-identity \
-    -n aad-pod-identity \
-    --set rbac.createUserFacingClusterRoles=true \
-    | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-curl -s https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts/aad-pod-identity/crds/crd.yaml | yq -s '"resources/crds/" + .metadata.name + ".yml"' -
-cd resources/render
-kustomize create app --recursive --autodetect
-cd ../crds
-kustomize create app --recursive --autodetect
-cd ../../../..
-echo "Upgraded aad-pod-identity"
-
-cd k8s/external-secrets-operator
-rm -rf resources/render/
-mkdir -p resources/render
-helm template external-secrets \
-   external-secrets/external-secrets \
-    -n external-secrets \
-    --set installCRDs=true | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-cd resources/render
-kustomize create app --recursive --autodetect
-cd ../../../..
-echo "Upgraded external-secrets-operator"
 
 argoCDVersion=$(get_latest_release "argoproj/argo-cd")
 cd k8s/argocd
@@ -91,16 +63,87 @@ kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded traefik"
 
-cd k8s/external-dns/
-externalDNSOperatorVersion=$(get_latest_release "kubernetes-sigs/external-dns")
-git clone -q --depth=1 https://github.com/kubernetes-sigs/external-dns.git --branch $externalDNSOperatorVersion $tempdir/externaldns 2> /dev/null
-rm -rf resources/render
+mkdir -p k8s/prometheus-operator || true
+cd k8s/prometheus-operator
+rm -rf resources/render/ || true
 mkdir -p resources/render
-cp -R $tempdir/externaldns/kustomize/* resources/render
-# Stupid workaround for properly doing this :facepalm:
-kustomize edit set image k8s.gcr.io/external-dns/external-dns:$externalDNSOperatorVersion 
-cd ../../
-echo "Upgraded external-dns to $externalDNSOperatorVersion"
+prometheusOperator=$(get_latest_release "prometheus-operator/prometheus-operator")
+# curl -sL https://github.com/prometheus-operator/prometheus-operator/releases/download/${prometheusOperator}/bundle.yaml \
+  # | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+git clone -q --depth=1 https://github.com/prometheus-operator/prometheus-operator.git --branch $prometheusOperator $tempdir/prometheus-operator 2> /dev/null
+cp $tempdir/prometheus-operator/example/prometheus-operator-crd/* resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-deployment.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-service.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-service-account.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-service-monitor.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-cluster-role.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator/prometheus-operator-cluster-role-binding.yaml resources/render
+cp $tempdir/prometheus-operator/example/rbac/prometheus-operator-crd/prometheus-operator-crd-cluster-roles.yaml resources/render
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded prometheus-operator to $prometheusOperator"
+
+mkdir -p k8s/monitoring || true
+cd k8s/monitoring
+rm -rf resources/render/ || true
+mkdir -p resources/render
+kubePrometheus=$(get_latest_release "prometheus-operator/kube-prometheus")
+git clone -q --depth=1 https://github.com/prometheus-operator/kube-prometheus.git --branch $kubePrometheus $tempdir/kube-prometheus 2> /dev/null
+mkdir -p resources/render/kube-state-metrics/ || true
+mkdir -p resources/render/blackbox-exporter/ || true
+mkdir -p resources/render/kubernetes/ || true
+mkdir -p resources/render/node-exporter/ || true
+mkdir -p resources/render/prometheus/ || true
+mkdir -p resources/render/alertmanager/ || true
+cp $tempdir/kube-prometheus/manifests/kubeStateMetrics-* resources/render/kube-state-metrics/
+cp $tempdir/kube-prometheus/manifests/blackboxExporter-* resources/render/blackbox-exporter/
+cp $tempdir/kube-prometheus/manifests/kubernetes* resources/render/kubernetes/
+cp $tempdir/kube-prometheus/manifests/nodeExporter-* resources/render/node-exporter/
+cp $tempdir/kube-prometheus/manifests/alertmanager-* resources/render/alertmanager/
+
+# needed to be selective to take all namespaces easily
+cp $tempdir/kube-prometheus/manifests/prometheus-* resources/render/prometheus/
+cp $tempdir/prometheus-operator/example/rbac/prometheus/prometheus-cluster-role-binding.yaml resources/render/prometheus/prometheus-clusterRoleBinding.yaml
+cp $tempdir/prometheus-operator/example/rbac/prometheus/prometheus-cluster-role.yaml resources/render/prometheus/prometheus-clusterRole.yaml
+rm resources/render/prometheus/prometheus-*SpecificNamespaces.yaml
+
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded kube-prometheus to $kubePrometheus"
+
+mkdir -p k8s/grafana-operator || true
+rm -rf resources/render/ || true
+mkdir -p resources/render
+cd k8s/grafana-operator
+rm -rf resources/render/
+mkdir -p resources/render
+helm template grafana-operator \
+  bitnami/grafana-operator \
+  -n grafana-operator \
+  --set namespaceOverride=grafana-operator \
+  --set operator.prometheus.serviceMonitor.enabled=true \
+  --set grafana.enabled=false | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded grafana-operator"
+
+mkdir -p k8s/dashboarding || true
+cd k8s/dashboarding
+rm -rf resources/render/
+mkdir -p resources/render
+helm template grafana-operator \
+  bitnami/grafana-operator \
+  -n grafana-operator \
+  --set namespaceOverride=grafana \
+  --set operator.enabled=false \
+  --set grafana.enabled=true | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded dashboarding"
 
 # # Cleanup
 rm -rf $tempdir
