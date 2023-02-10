@@ -107,15 +107,12 @@ cp $tempdir/kube-prometheus/manifests/prometheus-* resources/render/prometheus/
 cp $tempdir/prometheus-operator/example/rbac/prometheus/prometheus-cluster-role-binding.yaml resources/render/prometheus/prometheus-clusterRoleBinding.yaml
 cp $tempdir/prometheus-operator/example/rbac/prometheus/prometheus-cluster-role.yaml resources/render/prometheus/prometheus-clusterRole.yaml
 rm resources/render/prometheus/prometheus-*SpecificNamespaces.yaml
-
 cd resources/render
 kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded kube-prometheus to $kubePrometheus"
 
 mkdir -p k8s/grafana-operator || true
-rm -rf resources/render/ || true
-mkdir -p resources/render
 cd k8s/grafana-operator
 rm -rf resources/render/
 mkdir -p resources/render
