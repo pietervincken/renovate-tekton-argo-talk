@@ -142,5 +142,9 @@ kustomize create app --recursive --autodetect
 cd ../../../..
 echo "Upgraded dashboarding"
 
+
+thanosVersion=$(get_latest_release "thanos-io/thanos")
+yq -i ".[0].value.thanos.version |= \"$thanosVersion\""  k8s/monitoring/patches/prometheus-thanos.yaml
+
 # # Cleanup
 rm -rf $tempdir

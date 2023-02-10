@@ -1,0 +1,5 @@
+- op: add
+  path: /spec/
+  value:
+    thanos:
+      version: v0.30.2

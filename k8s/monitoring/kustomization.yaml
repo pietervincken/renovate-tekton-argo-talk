@@ -16,6 +16,10 @@ patches:
     path: patches/single-replica.yaml
 
   - target:
+      kind: Prometheus
+    path: patches/prometheus-thanos.yaml
+
+  - target:
       kind: ClusterRoleBinding
       name: prometheus
     path: patches/prometheus-cluster-role-binding-sa.yaml
