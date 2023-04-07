@@ -12,7 +12,7 @@ spec:
     - name: registry
   steps:
     - name: trigger-pipelineruns
-      image: docker.io/joyrex2001/tekline:latest
+      image: 930970667460.dkr.ecr.eu-west-1.amazonaws.com/renovate-talk-java-demo-app:tekline
       volumeMounts:
         - name: scripts
           mountPath: /scripts
