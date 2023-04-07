@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: ingressrouteudps.traefik.containo.us
+  name: ingressrouteudps.traefik.io
 spec:
-  group: traefik.containo.us
+  group: traefik.io
   names:
     kind: IngressRouteUDP
     listKind: IngressRouteUDPList
@@ -52,6 +52,9 @@ spec:
                             namespace:
                               description: Namespace defines the namespace of the referenced Kubernetes Service.
                               type: string
+                            nativeLB:
+                              description: NativeLB controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP. The Kubernetes Service itself does load-balance to the pods. By default, NativeLB is false.
+                              type: boolean
                             port:
                               anyOf:
                                 - type: integer

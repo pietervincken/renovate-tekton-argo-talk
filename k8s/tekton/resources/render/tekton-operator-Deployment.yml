@@ -3,8 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    operator.tekton.dev/release: v0.64.0
-    version: v0.64.0
+    operator.tekton.dev/release: v0.66.0
+    version: v0.66.0
   name: tekton-operator
   namespace: tekton-operator
 spec:
@@ -36,13 +36,13 @@ spec:
             - name: OPERATOR_NAME
               value: tekton-operator
             - name: IMAGE_PIPELINES_PROXY
-              value: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/proxy-webhook:v0.64.0@sha256:a3418b35b62f4b13d109c01e66e3263f0b5509b854a53eb1c81844bfbb2adc58
+              value: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/proxy-webhook:v0.66.0@sha256:072fc4e11628b0d03a57079ce90a552e12dc288a753b0171474560cb62a15869
             - name: IMAGE_JOB_PRUNER_TKN
               value: gcr.io/tekton-releases/dogfooding/tkn@sha256:025de221fb059ca24a3b2d988889ea34bce48dc76c0cf0d6b4499edb8c21325f
             - name: METRICS_DOMAIN
               value: tekton.dev/operator
             - name: VERSION
-              value: v0.64.0
+              value: v0.66.0
             - name: CONFIG_OBSERVABILITY_NAME
               value: tekton-config-observability
             - name: AUTOINSTALL_COMPONENTS
@@ -55,7 +55,7 @@ spec:
                 configMapKeyRef:
                   key: DEFAULT_TARGET_NAMESPACE
                   name: tekton-config-defaults
-          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.64.0@sha256:cc1736b7a78aa36d13644978758590c6fd0a6eb73fcaf02c35e53ed973bb305f
+          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.66.0@sha256:249e13c1e28c88bb8c971940bcd05cb1a1c02b9b84042ef980076465e1248475
           imagePullPolicy: Always
           name: tekton-operator-lifecycle
         - args:
@@ -77,10 +77,10 @@ spec:
             - name: PROFILING_PORT
               value: "9009"
             - name: VERSION
-              value: v0.64.0
+              value: v0.66.0
             - name: METRICS_DOMAIN
               value: tekton.dev/operator
-          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.64.0@sha256:cc1736b7a78aa36d13644978758590c6fd0a6eb73fcaf02c35e53ed973bb305f
+          image: gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.66.0@sha256:249e13c1e28c88bb8c971940bcd05cb1a1c02b9b84042ef980076465e1248475
           imagePullPolicy: Always
           name: tekton-operator-cluster-operations
       serviceAccountName: tekton-operator

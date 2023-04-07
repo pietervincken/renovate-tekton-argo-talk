@@ -5,8 +5,8 @@ metadata:
   labels:
     app: tekton-operator
     name: tekton-operator-webhook
-    operator.tekton.dev/release: v0.64.0
-    version: v0.64.0
+    operator.tekton.dev/release: v0.66.0
+    version: v0.66.0
   name: tekton-operator-webhook
   namespace: tekton-operator
 spec:

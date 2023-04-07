@@ -8,7 +8,7 @@ metadata:
   labels:
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-traefik
-    helm.sh/chart: traefik-21.0.0
+    helm.sh/chart: traefik-22.1.0
     app.kubernetes.io/managed-by: Helm
   annotations:
 spec:
@@ -32,14 +32,14 @@ spec:
       labels:
         app.kubernetes.io/name: traefik
         app.kubernetes.io/instance: traefik-traefik
-        helm.sh/chart: traefik-21.0.0
+        helm.sh/chart: traefik-22.1.0
         app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: traefik
       terminationGracePeriodSeconds: 60
       hostNetwork: false
       containers:
-        - image: traefik:v2.9.6
+        - image: docker.io/traefik:v2.9.10
           imagePullPolicy: IfNotPresent
           name: traefik
           resources:
@@ -82,9 +82,6 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
-            runAsGroup: 65532
-            runAsNonRoot: true
-            runAsUser: 65532
           volumeMounts:
             - name: data
               mountPath: /data
@@ -109,4 +106,7 @@ spec:
         - name: tmp
           emptyDir: {}
       securityContext:
-        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 65532
+        runAsNonRoot: true
+        runAsUser: 65532

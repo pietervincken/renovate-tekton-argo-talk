@@ -20,4 +20,4 @@ patches:
     path: patches/prometheus-cluster-role-binding-sa.yaml
 images:
   - name: quay.io/thanos/thanos
-    newTag: v0.30.2
+    newTag: v0.31.0

@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: traefikservices.traefik.containo.us
+  name: traefikservices.traefik.io
 spec:
-  group: traefik.containo.us
+  group: traefik.io
   names:
     kind: TraefikService
     listKind: TraefikServiceList
@@ -61,6 +61,9 @@ spec:
                           namespace:
                             description: Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.
                             type: string
+                          nativeLB:
+                            description: NativeLB controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP. The Kubernetes Service itself does load-balance to the pods. By default, NativeLB is false.
+                            type: boolean
                           passHostHeader:
                             description: PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service. By default, passHostHeader is true.
                             type: boolean
@@ -122,6 +125,9 @@ spec:
                     namespace:
                       description: Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.
                       type: string
+                    nativeLB:
+                      description: NativeLB controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP. The Kubernetes Service itself does load-balance to the pods. By default, NativeLB is false.
+                      type: boolean
                     passHostHeader:
                       description: PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service. By default, passHostHeader is true.
                       type: boolean
@@ -193,6 +199,9 @@ spec:
                           namespace:
                             description: Namespace defines the namespace of the referenced Kubernetes Service or TraefikService.
                             type: string
+                          nativeLB:
+                            description: NativeLB controls, when creating the load-balancer, whether the LB's children are directly the pods IPs or if the only child is the Kubernetes Service clusterIP. The Kubernetes Service itself does load-balance to the pods. By default, NativeLB is false.
+                            type: boolean
                           passHostHeader:
                             description: PassHostHeader defines whether the client Host header is forwarded to the upstream Kubernetes Service. By default, passHostHeader is true.
                             type: boolean
