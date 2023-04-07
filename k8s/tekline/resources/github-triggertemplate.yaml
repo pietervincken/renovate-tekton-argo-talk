@@ -9,7 +9,7 @@ spec:
     - name: gitrepositoryname
     - name: gitpushuseremail
   resourcetemplates:
-    - apiVersion: tekton.dev/v1beta1
+    - apiVersion: tekton.dev/v1
       kind: PipelineRun
       metadata:
         generateName: github-run-
