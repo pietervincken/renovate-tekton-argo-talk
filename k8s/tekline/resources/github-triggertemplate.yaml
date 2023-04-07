@@ -15,7 +15,7 @@ spec:
         generateName: github-run-
         namespace: tekline
       spec:
-        taskRunSpecs:
+        taskRunTemplate:
           serviceAccountName: delegate-pipeline
           podTemplate:
             securityContext:
