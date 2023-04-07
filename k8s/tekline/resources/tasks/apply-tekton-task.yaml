@@ -7,7 +7,7 @@ metadata:
 spec:
   params:
     - name: TEKLINE_IMAGE
-      default: 930970667460.dkr.ecr.eu-west-1.amazonaws.com/renovate-talk-java-demo-app:tekline
+      default: docker.io/pietervincken/tekline:latest
     - name: namespace
     - name: url
       description: git url to clone
