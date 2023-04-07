@@ -7,7 +7,7 @@ metadata:
 spec:
   params:
     - name: TEKLINE_IMAGE
-      default: docker.io/joyrex2001/tekline:latest
+      default: 930970667460.dkr.ecr.eu-west-1.amazonaws.com/renovate-talk-java-demo-app:tekline
     - name: namespace
     - name: url
       description: git url to clone
@@ -135,7 +135,7 @@ spec:
         #!/bin/bash
         set -euxo pipefail
 
-        PRUNE_LIST=' --prune-whitelist=tekton.dev/v1beta1/task --prune-whitelist=tekton.dev/v1beta1/pipeline '
+        PRUNE_LIST=' --prune-whitelist=tekton.dev/v1beta1/task --prune-whitelist=tekton.dev/v1/task --prune-whitelist=tekton.dev/v1beta1/pipeline --prune-whitelist=tekton.dev/v1/pipeline '
         kustomize build tekton | kubectl apply $PRUNE_LIST --prune --all -f - -n $(params.namespace)
   volumes:
     - name: shared-volume
