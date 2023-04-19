@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - resources/render
   - resources/ns.yaml
-  - resources/stripprefix-middleware.yaml
+  # - resources/stripprefix-middleware.yaml
 
 patches:
   # maybe not needed?

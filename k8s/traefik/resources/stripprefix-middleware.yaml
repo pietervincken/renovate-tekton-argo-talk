@@ -6,4 +6,4 @@ metadata:
 spec:
   stripPrefixRegex:
     regex:
-      - "^/[^/]+"
+      - ^/[^/]+
