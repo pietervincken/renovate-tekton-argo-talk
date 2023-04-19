@@ -55,6 +55,7 @@ helm template traefik traefik/traefik \
   -n traefik \
   --set globalArguments= \
   --set providers.kubernetesIngress.publishedService.enabled=true \
+  --set ingressRoute.dashboard.enabled=false \
   | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
 curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
