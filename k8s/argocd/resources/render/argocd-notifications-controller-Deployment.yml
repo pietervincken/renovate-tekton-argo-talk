@@ -2,6 +2,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/part-of: argocd
   name: argocd-notifications-controller
 spec:
   selector:
@@ -15,9 +19,9 @@ spec:
         app.kubernetes.io/name: argocd-notifications-controller
     spec:
       containers:
-        - command:
-            - argocd-notifications
-          image: quay.io/argoproj/argocd:v2.6.7
+        - args:
+            - /usr/local/bin/argocd-notifications
+          image: quay.io/argoproj/argocd:v2.7.6
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:

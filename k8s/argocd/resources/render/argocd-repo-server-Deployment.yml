@@ -33,10 +33,8 @@ spec:
               weight: 5
       automountServiceAccountToken: false
       containers:
-        - command:
-            - sh
-            - -c
-            - entrypoint.sh argocd-repo-server --redis argocd-redis:6379
+        - args:
+            - /usr/local/bin/argocd-repo-server
           env:
             - name: ARGOCD_RECONCILIATION_TIMEOUT
               valueFrom:
@@ -164,7 +162,7 @@ spec:
               value: /helm-working-dir
             - name: HELM_DATA_HOME
               value: /helm-working-dir
-          image: quay.io/argoproj/argocd:v2.6.7
+          image: quay.io/argoproj/argocd:v2.7.6
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 3
@@ -212,11 +210,11 @@ spec:
               name: plugins
       initContainers:
         - command:
-            - cp
+            - /bin/cp
             - -n
             - /usr/local/bin/argocd
             - /var/run/argocd/argocd-cmp-server
-          image: quay.io/argoproj/argocd:v2.6.7
+          image: quay.io/argoproj/argocd:v2.7.6
           name: copyutil
           securityContext:
             allowPrivilegeEscalation: false
