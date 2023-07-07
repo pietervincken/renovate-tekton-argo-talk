@@ -17,6 +17,15 @@ resources:
 - blackbox-exporter/blackboxExporter-service.yaml
 - blackbox-exporter/blackboxExporter-serviceAccount.yaml
 - blackbox-exporter/blackboxExporter-serviceMonitor.yaml
+- crds/0alertmanagerConfigCustomResourceDefinition.yaml
+- crds/0alertmanagerCustomResourceDefinition.yaml
+- crds/0podmonitorCustomResourceDefinition.yaml
+- crds/0probeCustomResourceDefinition.yaml
+- crds/0prometheusCustomResourceDefinition.yaml
+- crds/0prometheusruleCustomResourceDefinition.yaml
+- crds/0servicemonitorCustomResourceDefinition.yaml
+- crds/0thanosrulerCustomResourceDefinition.yaml
+- crds/namespace.yaml
 - kube-state-metrics/kubeStateMetrics-clusterRole.yaml
 - kube-state-metrics/kubeStateMetrics-clusterRoleBinding.yaml
 - kube-state-metrics/kubeStateMetrics-deployment.yaml
