@@ -4,6 +4,7 @@ resources:
   # - resources/render
   - resources/grafana.yaml
   - resources/datasource.yaml
+  - resources/ns.yaml
   - secrets/grafana.yaml
 
 namespace: dashboarding
