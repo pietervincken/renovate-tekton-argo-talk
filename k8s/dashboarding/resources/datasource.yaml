@@ -7,14 +7,14 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  datasources:
-    - name: Prometheus
-      type: prometheus
-      access: proxy
-      url: http://prometheus-operated.monitoring.svc.cluster.local:9090
-      isDefault: true
-      version: 1
-      editable: false
-      jsonData:
-        tlsSkipVerify: true
-        timeInterval: "5s"
+  datasource:
+    name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+    isDefault: true
+    version: 1
+    editable: false
+    jsonData:
+      tlsSkipVerify: true
+      timeInterval: "5s"
