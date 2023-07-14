@@ -2,10 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - grafana-operator-Deployment.yml
-- grafana-operator-Role.yml
-- grafana-operator-RoleBinding.yml
 - grafana-operator-Service.yml
 - grafana-operator-ServiceAccount.yml
 - grafana-operator-ServiceMonitor.yml
-- grafana-operator-leader-election-Role.yml
-- grafana-operator-leader-election-RoleBinding.yml
+- grafana-operator-grafana-operator-ClusterRole.yml
+- grafana-operator-grafana-operator-ClusterRoleBinding.yml

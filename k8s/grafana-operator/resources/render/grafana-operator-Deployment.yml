@@ -7,7 +7,7 @@ metadata:
   namespace: "grafana-operator"
   labels:
     app.kubernetes.io/name: grafana-operator
-    helm.sh/chart: grafana-operator-2.9.3
+    helm.sh/chart: grafana-operator-3.0.0
     app.kubernetes.io/instance: grafana-operator
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -22,7 +22,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: grafana-operator
-        helm.sh/chart: grafana-operator-2.9.3
+        helm.sh/chart: grafana-operator-3.0.0
         app.kubernetes.io/instance: grafana-operator
         app.kubernetes.io/managed-by: Helm
     spec:
@@ -46,7 +46,7 @@ spec:
         supplementalGroups: []
       containers:
         - name: grafana-operator
-          image: docker.io/bitnami/grafana-operator:4.10.1-debian-11-r0
+          image: docker.io/bitnami/grafana-operator:5.0.0-debian-11-r0
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
@@ -58,18 +58,12 @@ spec:
           command:
             - grafana-operator
           args:
-            - --grafana-image=docker.io/bitnami/grafana
-            - --grafana-image-tag=9.5.2-debian-11-r6
-            - --grafana-plugins-init-container-image=docker.io/bitnami/grafana
-            - --grafana-plugins-init-container-tag=9.5.2-debian-11-r6
             - --leader-elect=True
           env:
             - name: TEMPLATE_PATH
               value: /usr/local/bin/templates
             - name: WATCH_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+              value:
             - name: POD_NAME
               valueFrom:
                 fieldRef:

@@ -1,15 +1,46 @@
 ---
-# Source: grafana-operator/templates/rbac.yaml
+# Source: grafana-operator/templates/rbac-clustescope.yaml
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: grafana-operator
+  name: grafana-operator-grafana-operator
   labels:
     app.kubernetes.io/name: grafana-operator
-    helm.sh/chart: grafana-operator-2.9.3
+    helm.sh/chart: grafana-operator-3.0.0
     app.kubernetes.io/instance: grafana-operator
     app.kubernetes.io/managed-by: Helm
 rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
   - apiGroups:
       - ""
     resources:
@@ -37,19 +68,9 @@ rules:
       - patch
       - watch
   - apiGroups:
-      - ""
-    resources:
-      - pods
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
       - apps
-      - extensions
     resources:
       - deployments
-      - deployments/finalizers
     verbs:
       - create
       - delete
@@ -59,7 +80,7 @@ rules:
       - update
       - watch
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
     resources:
       - grafanadashboards
     verbs:
@@ -71,7 +92,13 @@ rules:
       - update
       - watch
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
+    resources:
+      - grafanadashboards/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - grafana.integreatly.org
     resources:
       - grafanadashboards/status
     verbs:
@@ -79,7 +106,7 @@ rules:
       - patch
       - update
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
     resources:
       - grafanadatasources
     verbs:
@@ -91,7 +118,13 @@ rules:
       - update
       - watch
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
+    resources:
+      - grafanadatasources/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - grafana.integreatly.org
     resources:
       - grafanadatasources/status
     verbs:
@@ -99,7 +132,7 @@ rules:
       - patch
       - update
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
     resources:
       - grafanafolders
     verbs:
@@ -111,7 +144,13 @@ rules:
       - update
       - watch
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
+    resources:
+      - grafanafolders/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - grafana.integreatly.org
     resources:
       - grafanafolders/status
     verbs:
@@ -119,30 +158,9 @@ rules:
       - patch
       - update
   - apiGroups:
-      - integreatly.org
-    resources:
-      - grafananotificationchannels
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
-      - integreatly.org
-    resources:
-      - grafananotificationchannels/status
-    verbs:
-      - get
-      - patch
-      - update
-  - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
     resources:
       - grafanas
-      - grafanas/finalizers
     verbs:
       - create
       - delete
@@ -152,7 +170,13 @@ rules:
       - update
       - watch
   - apiGroups:
-      - integreatly.org
+      - grafana.integreatly.org
+    resources:
+      - grafanas/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - grafana.integreatly.org
     resources:
       - grafanas/status
     verbs:
@@ -175,12 +199,22 @@ rules:
       - route.openshift.io
     resources:
       - routes
-      - routes/custom-host
     verbs:
       - create
       - delete
       - get
       - list
-      - patch
       - update
       - watch
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
