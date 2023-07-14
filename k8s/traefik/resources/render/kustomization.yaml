@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ingressroutes.traefik.io-CustomResourceDefinition.yml
+- ingressroutetcps.traefik.io-CustomResourceDefinition.yml
+- ingressrouteudps.traefik.io-CustomResourceDefinition.yml
+- middlewares.traefik.io-CustomResourceDefinition.yml
+- middlewaretcps.traefik.io-CustomResourceDefinition.yml
+- serverstransports.traefik.io-CustomResourceDefinition.yml
+- serverstransporttcps.traefik.io-CustomResourceDefinition.yml
+- tlsoptions.traefik.io-CustomResourceDefinition.yml
+- tlsstores.traefik.io-CustomResourceDefinition.yml
+- traefik-Deployment.yml
+- traefik-IngressClass.yml
+- traefik-Service.yml
+- traefik-ServiceAccount.yml
+- traefik-ingress-controller-ClusterRole.yml
+- traefik-ingress-controller-ClusterRoleBinding.yml
+- traefik-traefik-ClusterRole.yml
+- traefik-traefik-ClusterRoleBinding.yml
+- traefikservices.traefik.io-CustomResourceDefinition.yml
