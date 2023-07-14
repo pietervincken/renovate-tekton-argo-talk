@@ -4,5 +4,6 @@ resources:
   - resources/datasource.yaml
   - resources/grafana.yaml
   - resources/ns.yaml
+  - resources/ingress.yaml
 
 namespace: dashboarding
