@@ -13,7 +13,6 @@ spec:
     access: proxy
     url: http://prometheus-operated.monitoring.svc.cluster.local:9090
     isDefault: true
-    version: 1
     editable: false
     jsonData:
       tlsSkipVerify: true
