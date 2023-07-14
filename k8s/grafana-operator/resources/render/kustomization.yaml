@@ -1,9 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- grafana-operator-Deployment.yml
-- grafana-operator-Service.yml
-- grafana-operator-ServiceAccount.yml
-- grafana-operator-ServiceMonitor.yml
-- grafana-operator-grafana-operator-ClusterRole.yml
-- grafana-operator-grafana-operator-ClusterRoleBinding.yml
+- grafana-Namespace.yml
+- grafana-operator-controller-manager-Deployment.yml
+- grafana-operator-controller-manager-ServiceAccount.yml
+- grafana-operator-metrics-service-Service.yml
+- grafana-operator-permissions-ClusterRole.yml
+- grafana-operator-permissions-ClusterRoleBinding.yml
+- grafanadashboards.grafana.integreatly.org-CustomResourceDefinition.yml
+- grafanadatasources.grafana.integreatly.org-CustomResourceDefinition.yml
+- grafanafolders.grafana.integreatly.org-CustomResourceDefinition.yml
+- grafanas.grafana.integreatly.org-CustomResourceDefinition.yml
