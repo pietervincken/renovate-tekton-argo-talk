@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - resources/datasource.yaml
+  - resources/datasource-thanos.yaml
   - resources/grafana.yaml
   - resources/ns.yaml
   - resources/ingress.yaml
