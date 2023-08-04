@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- agents.agent.k8s.elastic.co-CustomResourceDefinition.yml
+- apmservers.apm.k8s.elastic.co-CustomResourceDefinition.yml
+- beats.beat.k8s.elastic.co-CustomResourceDefinition.yml
+- elastic-operator-ClusterRole.yml
+- elastic-operator-ClusterRoleBinding.yml
+- elastic-operator-ConfigMap.yml
+- elastic-operator-ServiceAccount.yml
+- elastic-operator-StatefulSet.yml
+- elastic-operator-edit-ClusterRole.yml
+- elastic-operator-view-ClusterRole.yml
+- elastic-system-Namespace.yml
+- elastic-webhook-server-Service.yml
+- elastic-webhook-server-cert-Secret.yml
+- elastic-webhook.k8s.elastic.co-ValidatingWebhookConfiguration.yml
+- elasticmapsservers.maps.k8s.elastic.co-CustomResourceDefinition.yml
+- elasticsearchautoscalers.autoscaling.k8s.elastic.co-CustomResourceDefinition.yml
+- elasticsearches.elasticsearch.k8s.elastic.co-CustomResourceDefinition.yml
+- enterprisesearches.enterprisesearch.k8s.elastic.co-CustomResourceDefinition.yml
+- kibanas.kibana.k8s.elastic.co-CustomResourceDefinition.yml
+- logstashes.logstash.k8s.elastic.co-CustomResourceDefinition.yml
+- stackconfigpolicies.stackconfigpolicy.k8s.elastic.co-CustomResourceDefinition.yml

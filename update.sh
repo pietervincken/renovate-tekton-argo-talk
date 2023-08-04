@@ -13,7 +13,7 @@ get_latest_release() {
 # helm repo add traefik https://helm.traefik.io/traefik
 # helm repo add external-secrets https://charts.external-secrets.io
 # helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo update
+# helm repo update
 
 # argoCDVersion=$(get_latest_release "argoproj/argo-cd")
 # cd k8s/argocd
@@ -48,21 +48,21 @@ helm repo update
 # cd ../../../..
 # echo "Upgraded certmanager to $certManagerVersion"
 
-cd k8s/traefik
-rm -rf resources/render/
-mkdir -p resources/render
-helm template traefik traefik/traefik \
-  -n traefik \
-  --set globalArguments= \
-  --set providers.kubernetesIngress.publishedService.enabled=true \
-  --set ingressRoute.dashboard.enabled=false \
-  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-cd resources/render/
-kustomize create app --recursive --autodetect
-cd ../../../..
-echo "Upgraded traefik"
+# cd k8s/traefik
+# rm -rf resources/render/
+# mkdir -p resources/render
+# helm template traefik traefik/traefik \
+#   -n traefik \
+#   --set globalArguments= \
+#   --set providers.kubernetesIngress.publishedService.enabled=true \
+#   --set ingressRoute.dashboard.enabled=false \
+#   | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+# curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+# curl -sL https://raw.githubusercontent.com/traefik/traefik/master/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+# cd resources/render/
+# kustomize create app --recursive --autodetect
+# cd ../../../..
+# echo "Upgraded traefik"
 
 # mkdir -p k8s/prometheus-operator || true
 # cd k8s/prometheus-operator
@@ -125,17 +125,17 @@ echo "Upgraded traefik"
 # echo "Upgraded kube-thanos to $kubeThanosVersion"
 # echo "Upgraded thanos to $thanosVersion"
 
-grafanaOperator=$(get_latest_release "grafana-operator/grafana-operator")
-mkdir -p k8s/grafana-operator || true
-cd k8s/grafana-operator
-rm -rf resources/render/
-mkdir -p resources/render
-kustomize build "https://github.com/grafana-operator/grafana-operator//deploy/kustomize/overlays/cluster_scoped?ref=$grafanaOperator" \
-  | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
-cd resources/render
-kustomize create app --recursive --autodetect
-cd ../../../..
-echo "Upgraded grafana-operator to $grafanaOperator"
+# grafanaOperator=$(get_latest_release "grafana-operator/grafana-operator")
+# mkdir -p k8s/grafana-operator || true
+# cd k8s/grafana-operator
+# rm -rf resources/render/
+# mkdir -p resources/render
+# kustomize build "https://github.com/grafana-operator/grafana-operator//deploy/kustomize/overlays/cluster_scoped?ref=$grafanaOperator" \
+#   | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+# cd resources/render
+# kustomize create app --recursive --autodetect
+# cd ../../../..
+# echo "Upgraded grafana-operator to $grafanaOperator"
 
 # mkdir -p k8s/dashboarding || true
 # cd k8s/dashboarding
@@ -151,6 +151,18 @@ echo "Upgraded grafana-operator to $grafanaOperator"
 # kustomize create app --recursive --autodetect
 # cd ../../../..
 # echo "Upgraded dashboarding"
+
+eckOperator=$(get_latest_release "elastic/cloud-on-k8s" | sed 's|v||' ) # hack to remove the v from the version
+mkdir -p k8s/elastic-operator || true
+cd k8s/elastic-operator
+rm -rf resources/render/
+mkdir -p resources/render
+curl -s https://download.elastic.co/downloads/eck/$eckOperator/crds.yaml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+curl -s https://download.elastic.co/downloads/eck/$eckOperator/operator.yaml | yq -s '"resources/render/" + .metadata.name + "-" + .kind + ".yml"' -
+cd resources/render
+kustomize create app --recursive --autodetect
+cd ../../../..
+echo "Upgraded elastic-operator to $eckOperator"
 
 # # Cleanup
 rm -rf $tempdir

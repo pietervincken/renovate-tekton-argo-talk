@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - resources/render
 
-namespace: grafana-operator
+namespace: elastic-system
