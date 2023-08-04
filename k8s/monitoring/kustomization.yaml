@@ -21,7 +21,7 @@ patches:
     path: patches/prometheus-cluster-role-binding-sa.yaml
 
   - target:
-      kind: StatefulSet
+      kind: Deployment
       name: thanos-query
     path: patches/thanos-query-prometheus-discovery.yaml
 images:
