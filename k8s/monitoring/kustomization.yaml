@@ -22,7 +22,3 @@ patches:
 images:
   - name: quay.io/thanos/thanos
     newTag: v0.31.0
-
-replicas:
-  - name: thanos-store
-    count: 0
