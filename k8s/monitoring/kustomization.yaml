@@ -19,6 +19,11 @@ patches:
       kind: ClusterRoleBinding
       name: prometheus
     path: patches/prometheus-cluster-role-binding-sa.yaml
+
+  - target:
+      kind: StatefulSet
+      name: thanos-query
+    path: patches/thanos-query-prometheus-discovery.yaml
 images:
   - name: quay.io/thanos/thanos
     newTag: v0.31.0
