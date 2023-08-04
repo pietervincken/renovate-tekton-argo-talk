@@ -2,5 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - resources/elasticsearch.yaml
+  - resources/kibana.yaml
+  - resources/filebeat.yaml
   - resources/ns.yaml
 namespace: logging
