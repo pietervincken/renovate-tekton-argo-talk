@@ -8,7 +8,7 @@ spec:
     matchLabels:
       dashboards: "grafana"
   datasource:
-    name: Prometheus
+    name: thanos
     type: prometheus
     access: proxy
     url: http://thanos-query.monitoring.svc.cluster.local:9090
