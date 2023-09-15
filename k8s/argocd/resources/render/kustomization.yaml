@@ -37,7 +37,6 @@ resources:
 - argocd-notifications-secret-Secret.yml
 - argocd-rbac-cm-ConfigMap.yml
 - argocd-redis-Deployment.yml
-- argocd-redis-RoleBinding.yml
 - argocd-redis-Service.yml
 - argocd-redis-ServiceAccount.yml
 - argocd-redis-network-policy-NetworkPolicy.yml

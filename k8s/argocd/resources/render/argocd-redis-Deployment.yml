@@ -47,6 +47,7 @@ spec:
             capabilities:
               drop:
                 - ALL
+            readOnlyRootFilesystem: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 999

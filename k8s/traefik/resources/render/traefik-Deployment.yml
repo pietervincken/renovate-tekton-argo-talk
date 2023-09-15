@@ -8,7 +8,7 @@ metadata:
   labels:
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-traefik
-    helm.sh/chart: traefik-23.1.0
+    helm.sh/chart: traefik-24.0.0
     app.kubernetes.io/managed-by: Helm
   annotations:
 spec:
@@ -32,14 +32,14 @@ spec:
       labels:
         app.kubernetes.io/name: traefik
         app.kubernetes.io/instance: traefik-traefik
-        helm.sh/chart: traefik-23.1.0
+        helm.sh/chart: traefik-24.0.0
         app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: traefik
       terminationGracePeriodSeconds: 60
       hostNetwork: false
       containers:
-        - image: docker.io/traefik:v2.10.1
+        - image: docker.io/traefik:v2.10.4
           imagePullPolicy: IfNotPresent
           name: traefik
           resources:
@@ -78,6 +78,7 @@ spec:
               containerPort: 8443
               protocol: "TCP"
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - ALL
@@ -100,6 +101,15 @@ spec:
             - "--providers.kubernetesingress"
             - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
             - "--entrypoints.websecure.http.tls=true"
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
       volumes:
         - name: data
           emptyDir: {}

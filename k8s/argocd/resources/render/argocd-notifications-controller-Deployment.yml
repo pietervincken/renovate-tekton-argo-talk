@@ -21,7 +21,20 @@ spec:
       containers:
         - args:
             - /usr/local/bin/argocd-notifications
-          image: quay.io/argoproj/argocd:v2.7.7
+          env:
+            - name: ARGOCD_NOTIFICATIONS_CONTROLLER_LOGFORMAT
+              valueFrom:
+                configMapKeyRef:
+                  key: notificationscontroller.log.format
+                  name: argocd-cmd-params-cm
+                  optional: true
+            - name: ARGOCD_NOTIFICATIONS_CONTROLLER_LOGLEVEL
+              valueFrom:
+                configMapKeyRef:
+                  key: notificationscontroller.log.level
+                  name: argocd-cmd-params-cm
+                  optional: true
+          image: quay.io/argoproj/argocd:v2.8.4
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:

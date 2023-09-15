@@ -1,8 +1,7 @@
 ---
-# Source: cert-manager/templates/serviceaccount.yaml
+# Source: cert-manager/templates/controller-config.yaml
 apiVersion: v1
-kind: ServiceAccount
-automountServiceAccountToken: true
+kind: ConfigMap
 metadata:
   name: cert-manager
   namespace: cert-manager
@@ -12,3 +11,4 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "controller"
     app.kubernetes.io/version: "v1.13.0"
+data:

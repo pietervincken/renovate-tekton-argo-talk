@@ -1,60 +1,60 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - alertmanager/alertmanager-alertmanager.yaml
-  - alertmanager/alertmanager-networkPolicy.yaml
-  - alertmanager/alertmanager-podDisruptionBudget.yaml
-  - alertmanager/alertmanager-prometheusRule.yaml
-  - alertmanager/alertmanager-secret.yaml
-  - alertmanager/alertmanager-service.yaml
-  - alertmanager/alertmanager-serviceAccount.yaml
-  - alertmanager/alertmanager-serviceMonitor.yaml
-  - blackbox-exporter/blackboxExporter-clusterRole.yaml
-  - blackbox-exporter/blackboxExporter-clusterRoleBinding.yaml
-  - blackbox-exporter/blackboxExporter-configuration.yaml
-  - blackbox-exporter/blackboxExporter-deployment.yaml
-  - blackbox-exporter/blackboxExporter-networkPolicy.yaml
-  - blackbox-exporter/blackboxExporter-service.yaml
-  - blackbox-exporter/blackboxExporter-serviceAccount.yaml
-  - blackbox-exporter/blackboxExporter-serviceMonitor.yaml
-  - kube-state-metrics/kubeStateMetrics-clusterRole.yaml
-  - kube-state-metrics/kubeStateMetrics-clusterRoleBinding.yaml
-  - kube-state-metrics/kubeStateMetrics-deployment.yaml
-  - kube-state-metrics/kubeStateMetrics-networkPolicy.yaml
-  - kube-state-metrics/kubeStateMetrics-prometheusRule.yaml
-  - kube-state-metrics/kubeStateMetrics-service.yaml
-  - kube-state-metrics/kubeStateMetrics-serviceAccount.yaml
-  - kube-state-metrics/kubeStateMetrics-serviceMonitor.yaml
-  - kubernetes/kubernetesControlPlane-prometheusRule.yaml
-  - kubernetes/kubernetesControlPlane-serviceMonitorApiserver.yaml
-  - kubernetes/kubernetesControlPlane-serviceMonitorCoreDNS.yaml
-  - kubernetes/kubernetesControlPlane-serviceMonitorKubeControllerManager.yaml
-  - kubernetes/kubernetesControlPlane-serviceMonitorKubeScheduler.yaml
-  - kubernetes/kubernetesControlPlane-serviceMonitorKubelet.yaml
-  - node-exporter/nodeExporter-clusterRole.yaml
-  - node-exporter/nodeExporter-clusterRoleBinding.yaml
-  - node-exporter/nodeExporter-daemonset.yaml
-  - node-exporter/nodeExporter-networkPolicy.yaml
-  - node-exporter/nodeExporter-prometheusRule.yaml
-  - node-exporter/nodeExporter-service.yaml
-  - node-exporter/nodeExporter-serviceAccount.yaml
-  - node-exporter/nodeExporter-serviceMonitor.yaml
-  - prometheus/prometheus-clusterRole.yaml
-  - prometheus/prometheus-clusterRoleBinding.yaml
-  - prometheus/prometheus-networkPolicy.yaml
-  - prometheus/prometheus-podDisruptionBudget.yaml
-  - prometheus/prometheus-prometheus.yaml
-  - prometheus/prometheus-prometheusRule.yaml
-  - prometheus/prometheus-roleBindingConfig.yaml
-  - prometheus/prometheus-roleConfig.yaml
-  - prometheus/prometheus-service.yaml
-  - prometheus/prometheus-serviceAccount.yaml
-  - prometheus/prometheus-serviceMonitor.yaml
-  - thanos/thanos-query-deployment.yaml
-  - thanos/thanos-query-service.yaml
-  - thanos/thanos-query-serviceAccount.yaml
-  - thanos/thanos-query-serviceMonitor.yaml
-  - thanos/thanos-store-service.yaml
-  - thanos/thanos-store-serviceAccount.yaml
-  - thanos/thanos-store-serviceMonitor.yaml
-  - thanos/thanos-store-statefulSet.yaml
+- alertmanager/alertmanager-alertmanager.yaml
+- alertmanager/alertmanager-networkPolicy.yaml
+- alertmanager/alertmanager-podDisruptionBudget.yaml
+- alertmanager/alertmanager-prometheusRule.yaml
+- alertmanager/alertmanager-secret.yaml
+- alertmanager/alertmanager-service.yaml
+- alertmanager/alertmanager-serviceAccount.yaml
+- alertmanager/alertmanager-serviceMonitor.yaml
+- blackbox-exporter/blackboxExporter-clusterRole.yaml
+- blackbox-exporter/blackboxExporter-clusterRoleBinding.yaml
+- blackbox-exporter/blackboxExporter-configuration.yaml
+- blackbox-exporter/blackboxExporter-deployment.yaml
+- blackbox-exporter/blackboxExporter-networkPolicy.yaml
+- blackbox-exporter/blackboxExporter-service.yaml
+- blackbox-exporter/blackboxExporter-serviceAccount.yaml
+- blackbox-exporter/blackboxExporter-serviceMonitor.yaml
+- kube-state-metrics/kubeStateMetrics-clusterRole.yaml
+- kube-state-metrics/kubeStateMetrics-clusterRoleBinding.yaml
+- kube-state-metrics/kubeStateMetrics-deployment.yaml
+- kube-state-metrics/kubeStateMetrics-networkPolicy.yaml
+- kube-state-metrics/kubeStateMetrics-prometheusRule.yaml
+- kube-state-metrics/kubeStateMetrics-service.yaml
+- kube-state-metrics/kubeStateMetrics-serviceAccount.yaml
+- kube-state-metrics/kubeStateMetrics-serviceMonitor.yaml
+- kubernetes/kubernetesControlPlane-prometheusRule.yaml
+- kubernetes/kubernetesControlPlane-serviceMonitorApiserver.yaml
+- kubernetes/kubernetesControlPlane-serviceMonitorCoreDNS.yaml
+- kubernetes/kubernetesControlPlane-serviceMonitorKubeControllerManager.yaml
+- kubernetes/kubernetesControlPlane-serviceMonitorKubeScheduler.yaml
+- kubernetes/kubernetesControlPlane-serviceMonitorKubelet.yaml
+- node-exporter/nodeExporter-clusterRole.yaml
+- node-exporter/nodeExporter-clusterRoleBinding.yaml
+- node-exporter/nodeExporter-daemonset.yaml
+- node-exporter/nodeExporter-networkPolicy.yaml
+- node-exporter/nodeExporter-prometheusRule.yaml
+- node-exporter/nodeExporter-service.yaml
+- node-exporter/nodeExporter-serviceAccount.yaml
+- node-exporter/nodeExporter-serviceMonitor.yaml
+- prometheus/prometheus-clusterRole.yaml
+- prometheus/prometheus-clusterRoleBinding.yaml
+- prometheus/prometheus-networkPolicy.yaml
+- prometheus/prometheus-podDisruptionBudget.yaml
+- prometheus/prometheus-prometheus.yaml
+- prometheus/prometheus-prometheusRule.yaml
+- prometheus/prometheus-roleBindingConfig.yaml
+- prometheus/prometheus-roleConfig.yaml
+- prometheus/prometheus-service.yaml
+- prometheus/prometheus-serviceAccount.yaml
+- prometheus/prometheus-serviceMonitor.yaml
+- thanos/thanos-query-deployment.yaml
+- thanos/thanos-query-service.yaml
+- thanos/thanos-query-serviceAccount.yaml
+- thanos/thanos-query-serviceMonitor.yaml
+- thanos/thanos-store-service.yaml
+- thanos/thanos-store-serviceAccount.yaml
+- thanos/thanos-store-serviceMonitor.yaml
+- thanos/thanos-store-statefulSet.yaml

@@ -65,7 +65,7 @@ spec:
             - -n
             - /usr/local/bin/argocd
             - /shared/argocd-dex
-          image: quay.io/argoproj/argocd:v2.7.7
+          image: quay.io/argoproj/argocd:v2.8.4
           imagePullPolicy: Always
           name: copyutil
           securityContext:
