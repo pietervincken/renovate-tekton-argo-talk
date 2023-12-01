@@ -20,6 +20,18 @@ spec:
         - args:
             - /usr/local/bin/argocd-applicationset-controller
           env:
+            - name: ARGOCD_APPLICATIONSET_CONTROLLER_GLOBAL_PRESERVED_ANNOTATIONS
+              valueFrom:
+                configMapKeyRef:
+                  key: applicationsetcontroller.global.preserved.annotations
+                  name: argocd-cmd-params-cm
+                  optional: true
+            - name: ARGOCD_APPLICATIONSET_CONTROLLER_GLOBAL_PRESERVED_LABELS
+              valueFrom:
+                configMapKeyRef:
+                  key: applicationsetcontroller.global.preserved.labels
+                  name: argocd-cmd-params-cm
+                  optional: true
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -132,7 +144,7 @@ spec:
                   key: applicationsetcontroller.allowed.scm.providers
                   name: argocd-cmd-params-cm
                   optional: true
-          image: quay.io/argoproj/argocd:v2.8.4
+          image: quay.io/argoproj/argocd:v2.9.2
           imagePullPolicy: Always
           name: argocd-applicationset-controller
           ports:
