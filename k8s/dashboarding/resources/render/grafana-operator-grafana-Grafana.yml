@@ -9,7 +9,8 @@ metadata:
     app.kubernetes.io/instance: grafana-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: grafana-operator
-    helm.sh/chart: grafana-operator-3.4.5
+    app.kubernetes.io/version: 5.5.2
+    helm.sh/chart: grafana-operator-3.5.9
 spec:
   client:
     timeout: 5
@@ -22,7 +23,8 @@ spec:
         app.kubernetes.io/instance: grafana-operator
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: grafana-operator
-        helm.sh/chart: grafana-operator-3.4.5
+        app.kubernetes.io/version: 5.5.2
+        helm.sh/chart: grafana-operator-3.5.9
         app.kubernetes.io/component: grafana
     spec:
       replicas: 1
@@ -37,7 +39,8 @@ spec:
             app.kubernetes.io/instance: grafana-operator
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: grafana-operator
-            helm.sh/chart: grafana-operator-3.4.5
+            app.kubernetes.io/version: 5.5.2
+            helm.sh/chart: grafana-operator-3.5.9
             app.kubernetes.io/component: grafana
         spec:
           affinity:
@@ -53,24 +56,25 @@ spec:
                   weight: 1
           securityContext:
             fsGroup: 1001
-            runAsGroup: 0
-            runAsNonRoot: true
-            runAsUser: 1001
-            supplementalGroups: []
           volumes:
             - name: grafana-data
               emptyDir: {}
           containers:
             - name: grafana
-              image: docker.io/bitnami/grafana:10.1.1-debian-11-r8
+              image: docker.io/bitnami/grafana:10.2.2-debian-11-r1
               imagePullPolicy: IfNotPresent
               securityContext:
                 allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
                 privileged: false
                 readOnlyRootFilesystem: false
                 runAsGroup: 0
                 runAsNonRoot: true
                 runAsUser: 1001
+                seccompProfile:
+                  type: RuntimeDefault
               resources:
                 limits: {}
                 requests: {}

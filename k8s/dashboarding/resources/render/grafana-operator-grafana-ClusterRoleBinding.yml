@@ -8,7 +8,8 @@ metadata:
     app.kubernetes.io/instance: grafana-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: grafana-operator
-    helm.sh/chart: grafana-operator-3.4.5
+    app.kubernetes.io/version: 5.5.2
+    helm.sh/chart: grafana-operator-3.5.9
 subjects:
   - kind: ServiceAccount
     name: grafana-operator
