@@ -7,7 +7,7 @@ metadata:
   namespace: elastic-system
   labels:
     control-plane: elastic-operator
-    app.kubernetes.io/version: "2.9.0"
+    app.kubernetes.io/version: "2.10.0"
 data:
   eck.yaml: |-
     log-verbosity: 0
@@ -18,6 +18,7 @@ data:
     ca-cert-rotate-before: 24h
     cert-validity: 8760h
     cert-rotate-before: 24h
+    disable-config-watch: false
     exposed-node-labels: [topology.kubernetes.io/.*,failure-domain.beta.kubernetes.io/.*]
     set-default-security-context: auto-detect
     kube-client-timeout: 60s
@@ -28,5 +29,7 @@ data:
     enable-webhook: true
     webhook-name: elastic-webhook.k8s.elastic.co
     webhook-port: 9443
+    operator-namespace: elastic-system
     enable-leader-election: true
     elasticsearch-observation-interval: 10s
+    ubi-only: false
