@@ -19,6 +19,8 @@ resources:
 - tekton-operator-webhook-Deployment.yml
 - tekton-operator-webhook-Service.yml
 - tekton-operator-webhook-certs-Secret.yml
+- tekton-result-read-role-ClusterRole.yml
+- tekton-result-read-rolebinding-ClusterRoleBinding.yml
 - tektonchains.operator.tekton.dev-CustomResourceDefinition.yml
 - tektonconfigs.operator.tekton.dev-CustomResourceDefinition.yml
 - tektondashboards.operator.tekton.dev-CustomResourceDefinition.yml

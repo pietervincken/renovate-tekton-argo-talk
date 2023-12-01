@@ -4,7 +4,7 @@ kind: Service
 metadata:
   labels:
     app: tekton-pipelines-controller
-    version: v0.67.0
+    version: v0.68.1
   name: tekton-operator
   namespace: tekton-operator
 spec:
