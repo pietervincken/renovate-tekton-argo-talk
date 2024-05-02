@@ -25,4 +25,4 @@ patches:
     path: patches/thanos-query-prometheus-discovery.yaml
 images:
   - name: quay.io/thanos/thanos
-    newTag: v0.32.5
+    newTag: v0.35.0
